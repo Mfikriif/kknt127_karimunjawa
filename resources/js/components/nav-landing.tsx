@@ -20,14 +20,23 @@ export default function NavLanding() {
 
             {/* Slide-in Menu */}
             <div
-                className={`fixed top-0 right-0 z-40 h-full w-96 transform bg-white/20 backdrop-blur-md transition-transform duration-300 ${
+                className={`fixed top-0 right-0 z-40 h-full w-full transform bg-white/20 backdrop-blur-3xl transition-transform duration-300 sm:max-w-sm md:max-w-md lg:max-w-lg ${
+                    // Lebar responsif dan efek glass penuh
                     isOpen ? 'translate-x-0' : 'translate-x-full'
                 }`}
             >
-                <ul className="mt-25 space-y-4 px-6 text-2xl font-semibold tracking-wider text-white">
+                {/* Daftar menu dengan ukuran font responsif */}
+                <ul className="mt-28 space-y-6 px-6 text-xl font-semibold tracking-wider text-white sm:text-4xl md:text-4xl lg:text-4xl">
                     <li>
-                        <a href="#features" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Features
+                        {/* Menggunakan tag <a> standar sebagai pengganti Link */}
+                        <a href="/" className="block hover:text-blue-400" onClick={toggleMenu}>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        {/* Menggunakan tag <a> standar sebagai pengganti Link */}
+                        <a href="/time-line" className="block hover:text-blue-400" onClick={toggleMenu}>
+                            Time Line Kegiatan dan Dosen
                         </a>
                     </li>
                     <li>

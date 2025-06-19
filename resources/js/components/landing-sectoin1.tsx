@@ -49,7 +49,7 @@ export default function LandingSection1() {
                     className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center text-white transition-all duration-300 ease-out"
                 >
                     <h1 className="mb-4 text-4xl leading-tight font-bold tracking-widest sm:text-5xl md:text-6xl lg:text-7xl">SELAMAT DATANG</h1>
-                    <p className="text-lg font-medium tracking-widest sm:text-xl md:text-2xl">DI OLAHLAUT KEMUJAN</p>
+                    <p className="text-lg font-medium tracking-widest sm:text-xl md:text-2xl">DI OLAHLAUTKEMUJAN</p>
                 </div>
             </section>
         </>
