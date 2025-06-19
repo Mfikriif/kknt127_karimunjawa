@@ -1,3 +1,4 @@
+import FooterLanding from '@/components/footer-landing';
 import LandingSection2 from '@/components/landing-section2';
 import LandingSection3 from '@/components/landing-section3';
 import LandingSection1 from '@/components/landing-sectoin1';
@@ -18,6 +19,9 @@ export default function HomePage() {
 
             {/* Section 3 */}
             <LandingSection3 />
+
+            {/* footer */}
+            <FooterLanding />
         </div>
     );
 }
