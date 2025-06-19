@@ -42,15 +42,12 @@
 
     @routes
 
-    {{-- START PERUBAHAN DI SINI --}}
-
     {{-- Vite assets, aktifkan React Refresh HANYA di lingkungan development --}}
+    {{-- Pastikan tidak ada karakter tersembunyi (seperti non-breaking space) di baris ini --}}
     @if (app()->environment('local'))
         @viteReactRefresh
     @endif
     @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
-
-    {{-- END PERUBAHAN DI SINI --}}
 
     @inertiaHead
 </head>
