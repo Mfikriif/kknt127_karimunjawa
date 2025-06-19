@@ -36,18 +36,13 @@ export default function LandingSection3() {
         {
             title: 'Kemujan',
             content:
-                'Kemujan adalah pulau yang berada di Kepulauan Karimunjawa, Jepara, Jawa Tengah. Pulau ini secara administratif berada di kecamatan Karimunjawa. Pulau Kemujan merupakan pulau terbesar kedua di Kepulauan Karimunjawa, dan hutannya lebih sedikit dibandingkan Pulau Karimunjawa yang lebih luas. Pulau ini dilayani oleh Bandar Udara Dewadaru, dermaga laut, dan PLTD.',
-        },
-        {
-            title: 'Keberlanjutan Lingkungan',
-            content:
-                'Upaya pelestarian lingkungan di Karimunjawa sangat penting untuk menjaga ekosistem laut dan keanekaragaman hayati yang ada. Masyarakat setempat dilibatkan dalam program-program konservasi untuk memastikan bahwa sumber daya alam dapat dimanfaatkan secara berkelanjutan.',
+                'Kemujan, permata tersembunyi di gugusan Karimunjawa, dikenal sebagai pusat budidaya rumput laut dan surga wisata bahari yang tenang. Dikelilingi oleh keindahan alam Taman Nasional Karimunjawa, desa ini menjadi contoh harmoni antara kehidupan masyarakat pesisir dan pelestarian lingkungan.',
         },
     ];
 
     return (
         <section className="relative min-h-[100dvh] bg-[rgb(12,52,76)] px-4 py-16">
-            <div className="mx-auto flex max-w-screen-xl flex-col items-center justify-center gap-10 text-white md:flex-row md:gap-16">
+            <div className="mx-auto flex max-w-screen-xl flex-col items-center justify-center gap-10 pt-28 text-white md:flex-row md:gap-16">
                 {/* Judul */}
                 <div className="w-full text-center md:w-1/2 md:text-left">
                     <h1 className="text-3xl font-bold tracking-wide sm:text-4xl lg:text-5xl">Tentang Karimunjawa dan Kemujan</h1>
