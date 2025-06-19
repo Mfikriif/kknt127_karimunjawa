@@ -1,3 +1,4 @@
+import FooterLanding from '@/components/footer-landing';
 import NavLanding from '@/components/nav-landing';
 
 export default function TimeLine() {
@@ -65,6 +66,8 @@ export default function TimeLine() {
                     </div>
                 </div>
             </section>
+
+            <FooterLanding />
         </div>
     );
 }
