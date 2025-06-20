@@ -7,6 +7,7 @@ use App\Models\AdminActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class SeaweedTypeController extends Controller
@@ -47,45 +48,44 @@ class SeaweedTypeController extends Controller
         return redirect()->route('admin.seaweed-types.index')->with('success', 'Seaweed type created successfully.');
     }
 
-    public function edit(SeaweedType $seaweedType)
+    public function edit($id)
     {
+        $seaweedType = SeaweedType::findOrFail($id);
         return Inertia::render('admin/seaweedtype/edit', ['seaweedType' => $seaweedType]);
     }
 
     public function update(Request $request, SeaweedType $seaweedType)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'characteristics' => 'nullable|string',
-            'benefits' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'characteristics' => 'nullable|string',
+        'benefits' => 'nullable|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        $data = $request->all();
-
-        if ($request->hasFile('image')) {
-            if ($seaweedType->image) {
-                Storage::disk('public')->delete($seaweedType->image);
-            }
-            $data['image'] = $request->file('image')->store('seaweed_images', 'public');
+    if ($request->hasFile('image')) {
+        if ($seaweedType->image) {
+            Storage::disk('public')->delete($seaweedType->image);
         }
-
-        $seaweedType->update($data);
-
-        AdminActivity::create([
-            'description' => '🛠️ Jenis rumput laut "' . $seaweedType->name . '" diperbarui',
-            'admin_id' => Auth::id(),
-        ]);
-
-        return redirect()->route('admin.seaweed-types.index')->with('success', 'Seaweed type updated successfully.');
+        $validated['image'] = $request->file('image')->store('seaweed_images', 'public');
     }
+
+    $seaweedType->update($validated);
+
+    AdminActivity::create([
+        'description' => '🛠️ Jenis rumput laut "' . $seaweedType->name . '" diperbarui',
+        'admin_id' => Auth::id(),
+    ]);
+
+    return redirect()->route('admin.seaweed-types.index')->with('success', 'Data berhasil diperbarui!');
+}
 
     public function destroy($id)
     {
         $seaweedType = SeaweedType::findOrFail($id);
 
         if ($seaweedType->image) {
-            Storage::delete('public/' . $seaweedType->image);
+            Storage::disk('public')->delete($seaweedType->image);
         }
 
         $name = $seaweedType->name;

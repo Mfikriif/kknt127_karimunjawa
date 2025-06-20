@@ -1,6 +1,5 @@
 import React from 'react';
 import { router } from '@inertiajs/react';
-import { usePage } from '@inertiajs/react';
 import {
     FaTachometerAlt,
     FaBoxOpen,
@@ -36,7 +35,7 @@ export default function AdminSidebar() {
             color: 'from-emerald-500 to-teal-500',
         },
         {
-            label: 'Metode Pengolahan',
+            label: 'Cara Pengolahan',
             icon: <FaCogs />,
             href: '/admin/processing-methods',
             color: 'from-purple-500 to-pink-500',

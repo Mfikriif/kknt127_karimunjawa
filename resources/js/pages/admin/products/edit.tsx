@@ -10,7 +10,7 @@ type Product = {
   type: string;
   description: string;
   link: string;
-  image: string; // Field gambar produk sebelumnya
+  image: string;
 };
 
 type Props = {
@@ -28,6 +28,7 @@ export default function EditProduct({ product }: Props) {
   });
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string>(''); // nama file terpilih
 
   useEffect(() => {
     if (product.image) {
@@ -40,6 +41,7 @@ export default function EditProduct({ product }: Props) {
     if (file) {
       setData('gambar', file);
       setPreviewImage(URL.createObjectURL(file));
+      setFileName(file.name);
     }
   };
 
@@ -83,6 +85,7 @@ export default function EditProduct({ product }: Props) {
                 encType="multipart/form-data"
                 className="bg-white p-8 rounded-2xl shadow-xl space-y-6"
               >
+                {/* Nama Produk */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Nama Produk</label>
                   <input
@@ -95,6 +98,7 @@ export default function EditProduct({ product }: Props) {
                   {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                 </div>
 
+                {/* Kategori dan Tipe */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
@@ -127,6 +131,7 @@ export default function EditProduct({ product }: Props) {
                   </div>
                 </div>
 
+                {/* Deskripsi */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
                   <textarea
@@ -139,6 +144,7 @@ export default function EditProduct({ product }: Props) {
                   {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
                 </div>
 
+                {/* Link Produk */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Link Produk</label>
                   <input
@@ -151,20 +157,23 @@ export default function EditProduct({ product }: Props) {
                   {errors.link && <p className="text-red-500 text-sm mt-1">{errors.link}</p>}
                 </div>
 
-                {/* Gambar Preview */}
-                {previewImage && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Preview Gambar</label>
-                    <img
-                      src={previewImage}
-                      alt="Preview Gambar"
-                      className="h-48 rounded-md border object-cover mb-2"
-                    />
-                  </div>
-                )}
-
+                {/* Gambar & Preview */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Ganti Gambar (Opsional)</label>
+
+                  <div className="flex items-center gap-4 mb-2">
+                    {previewImage && (
+                      <img
+                        src={previewImage}
+                        alt="Preview Gambar"
+                        className="h-20 w-20 object-cover rounded-md border"
+                      />
+                    )}
+                    {fileName && (
+                      <p className="text-gray-600 text-sm">{fileName}</p>
+                    )}
+                  </div>
+
                   <input
                     type="file"
                     onChange={handleFileChange}
@@ -174,16 +183,16 @@ export default function EditProduct({ product }: Props) {
                   {errors.gambar && <p className="text-red-500 text-sm mt-1">{errors.gambar}</p>}
                 </div>
 
+                {/* Tombol Submit */}
                 <div className="text-right">
-                <button
+                  <button
                     type="submit"
                     disabled={processing}
                     className="bg-blue-900 hover:bg-blue-950 text-white font-medium px-6 py-2 rounded-md transition disabled:opacity-50"
-                >
+                  >
                     Update
-                </button>
+                  </button>
                 </div>
-
               </form>
             </div>
           </main>

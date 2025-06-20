@@ -2,9 +2,19 @@ import React, { useState } from 'react';
 import { Link, router } from '@inertiajs/react';
 import AdminSidebar from '@/components/AdminSidebar';
 import AdminNavbar from '@/components/AdminNavbar';
-import { FaPlus, FaTrash, FaEdit, FaEye } from 'react-icons/fa';
+import { FaTrash, FaEdit, FaEye } from 'react-icons/fa';
 
-export default function ProcessingMethodIndex({ processingMethods }: any) {
+type ProcessingMethod = {
+  id: number;
+  judul: string;
+  steps_count: number;
+};
+
+type Props = {
+  processingMethods: ProcessingMethod[];
+};
+
+export default function ProcessingMethodIndex({ processingMethods }: Props) {
   const [searchQuery, setSearchQuery] = useState('');
   const [entriesPerPage, setEntriesPerPage] = useState(10);
 
@@ -14,7 +24,7 @@ export default function ProcessingMethodIndex({ processingMethods }: any) {
     }
   };
 
-  const filteredMethods = processingMethods.filter((item: any) =>
+  const filteredMethods = processingMethods.filter((item) =>
     item.judul.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -29,19 +39,21 @@ export default function ProcessingMethodIndex({ processingMethods }: any) {
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Daftar Metode Pengolahan</h1>
 
           {/* Filter & Search */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
-            <div className="flex items-center space-x-2 w-full md:w-auto">
-              <label htmlFor="entries" className="text-gray-700 font-medium">Tampilkan:</label>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+            <div className="flex items-center gap-2">
+              <label htmlFor="entries" className="text-sm text-gray-600">Tampilkan</label>
               <select
                 id="entries"
                 value={entriesPerPage}
                 onChange={(e) => setEntriesPerPage(Number(e.target.value))}
-                className="border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-400"
+                className="border rounded px-2 py-1 text-sm"
               >
-                <option value={5}>5 entri</option>
-                <option value={10}>10 entri</option>
-                <option value={25}>25 entri</option>
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
               </select>
+              <span className="text-sm text-gray-600">entri</span>
             </div>
 
             <input
@@ -49,19 +61,21 @@ export default function ProcessingMethodIndex({ processingMethods }: any) {
               placeholder="Cari metode..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full md:w-64 pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 shadow-sm transition relative"
+              className="w-full md:w-64 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
 
-          {/* Tambah button */}
-            <div className="mb-4">
+
+
+          {/* Tombol Tambah */}
+          <div className="mb-4">
             <Link
-                href="/admin/processing-methods/create"
-                className="inline-block bg-blue-900 hover:bg-blue-950 text-white px-5 py-2 text-sm rounded-lg shadow transition"
+              href="/admin/processing-methods/create"
+              className="inline-block bg-blue-900 hover:bg-blue-950 text-white px-5 py-2 text-sm rounded-lg shadow transition"
             >
-                + Tambah
+              + Tambah
             </Link>
-            </div>
+          </div>
 
           {/* Table */}
           <div className="overflow-x-auto shadow rounded-lg bg-white">
@@ -82,7 +96,7 @@ export default function ProcessingMethodIndex({ processingMethods }: any) {
                     </td>
                   </tr>
                 ) : (
-                  displayedMethods.map((item: any, index: number) => (
+                  displayedMethods.map((item, index) => (
                     <tr key={item.id} className="border-t hover:bg-gray-50 transition">
                       <td className="p-4">{index + 1}</td>
                       <td className="p-4 font-medium">{item.judul}</td>

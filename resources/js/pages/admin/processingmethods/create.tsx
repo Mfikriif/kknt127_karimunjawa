@@ -6,26 +6,45 @@ import { Plus, Save } from 'lucide-react';
 
 export default function Create() {
   const [judul, setJudul] = useState('');
-  const [steps, setSteps] = useState([{ tahap_ke: 1, deskripsi_tahapan: '', gambar_tahapan: null, preview: '' }]);
+  const [steps, setSteps] = useState<Step[]>([
+    { tahap_ke: 1, deskripsi_tahapan: '', gambar_tahapan: null, preview: '' },
+  ]);
 
+  // Tipe untuk tiap langkah
+  type Step = {
+    tahap_ke: number;
+    deskripsi_tahapan: string;
+    gambar_tahapan: File | null;
+    preview: string;
+  };
+
+  // Tipe field input langkah
   type StepField = 'deskripsi_tahapan' | 'gambar_tahapan';
 
-  const handleStepChange = (index: number, field: StepField, value: any) => {
+  // Fungsi untuk menangani perubahan per langkah
+  const handleStepChange = (
+    index: number,
+    field: StepField,
+    value: string | File | null
+  ) => {
     const updatedSteps = [...steps];
 
     if (field === 'gambar_tahapan') {
-      const file = value;
+      const file = value as File | null;
       const preview = file ? URL.createObjectURL(file) : '';
       updatedSteps[index] = { ...updatedSteps[index], gambar_tahapan: file, preview };
     } else {
-      updatedSteps[index] = { ...updatedSteps[index], [field]: value };
+      updatedSteps[index] = { ...updatedSteps[index], [field]: value as string };
     }
 
     setSteps(updatedSteps);
   };
 
   const addStep = () => {
-    setSteps([...steps, { tahap_ke: steps.length + 1, deskripsi_tahapan: '', gambar_tahapan: null, preview: '' }]);
+    setSteps([
+      ...steps,
+      { tahap_ke: steps.length + 1, deskripsi_tahapan: '', gambar_tahapan: null, preview: '' },
+    ]);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -48,15 +67,12 @@ export default function Create() {
       <div className="flex-1 flex flex-col">
         <AdminNavbar />
         <main className="p-6 md:p-10">
-          {/* Judul halaman */}
           <div className="max-w-3xl mx-auto mb-6">
             <h1 className="text-4xl font-bold text-gray-600">Tambah Metode Pengolahan</h1>
           </div>
 
-          {/* Card Form */}
           <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-md">
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Input Judul */}
               <div>
                 <label className="block text-gray-700 font-medium mb-2">Judul Metode</label>
                 <input
@@ -68,14 +84,12 @@ export default function Create() {
                 />
               </div>
 
-              {/* Step Inputs */}
               {steps.map((step, index) => (
                 <div key={index} className="border border-gray-200 bg-gray-50 rounded-lg p-5 shadow-sm">
                   <h2 className="font-semibold text-lg mb-4 text-gray-700">🧩 Tahap {index + 1}</h2>
 
                   <input type="hidden" value={step.tahap_ke} />
 
-                  {/* Deskripsi */}
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-600 mb-1">Deskripsi Tahapan</label>
                     <textarea
@@ -86,7 +100,6 @@ export default function Create() {
                     />
                   </div>
 
-                  {/* Upload Gambar */}
                   <div className="mb-2">
                     <label className="block text-sm font-medium text-gray-600 mb-1">Gambar Tahapan (opsional)</label>
 
@@ -95,12 +108,13 @@ export default function Create() {
                       <input
                         type="file"
                         accept="image/*"
-                        onChange={(e) => handleStepChange(index, 'gambar_tahapan', e.target.files?.[0] || null)}
+                        onChange={(e) =>
+                          handleStepChange(index, 'gambar_tahapan', e.target.files?.[0] || null)
+                        }
                         className="hidden"
                       />
                     </label>
 
-                    {/* Preview */}
                     {step.preview && (
                       <img
                         src={step.preview}
@@ -112,7 +126,6 @@ export default function Create() {
                 </div>
               ))}
 
-              {/* Tombol */}
               <div className="flex gap-3">
                 <button
                   type="button"

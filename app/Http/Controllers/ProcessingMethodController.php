@@ -11,19 +11,16 @@ use Inertia\Inertia;
 
 class ProcessingMethodController extends Controller
 {
-
     public function index()
     {
         $methods = ProcessingMethod::withCount('steps')->get();
         return Inertia::render('admin/processingmethods/index', ['processingMethods' => $methods]);
     }
 
-
     public function create()
     {
         return Inertia::render('admin/processingmethods/create');
     }
-
 
     public function store(Request $request)
     {
@@ -59,20 +56,17 @@ class ProcessingMethodController extends Controller
         return redirect()->route('admin.processing-methods.index');
     }
 
-
     public function show(ProcessingMethod $processingMethod)
     {
         $processingMethod->load('steps');
         return Inertia::render('admin/processingmethods/show', ['processingMethod' => $processingMethod]);
     }
 
-
     public function edit(ProcessingMethod $processingMethod)
     {
         $processingMethod->load('steps');
         return Inertia::render('admin/processingmethods/edit', ['processingMethod' => $processingMethod]);
     }
-
 
     public function update(Request $request, ProcessingMethod $processingMethod)
     {
@@ -86,7 +80,7 @@ class ProcessingMethodController extends Controller
 
         $processingMethod->update(['judul' => $data['judul']]);
 
-        // Delete old steps & their images
+        // Hapus gambar lama & langkah lama
         foreach ($processingMethod->steps as $step) {
             if ($step->gambar_tahapan) {
                 Storage::disk('public')->delete($step->gambar_tahapan);
@@ -94,6 +88,7 @@ class ProcessingMethodController extends Controller
         }
         $processingMethod->steps()->delete();
 
+        // Tambah ulang langkah baru
         foreach ($data['steps'] as $index => $step) {
             $path = null;
             if ($request->hasFile("steps.$index.gambar_tahapan")) {
@@ -102,7 +97,7 @@ class ProcessingMethodController extends Controller
 
             $processingMethod->steps()->create([
                 'tahap_ke' => $step['tahap_ke'],
-                'deskripsi_tahapan' => $step['deskripsi_tahapan'],
+                'deskripsi_tahapan' => $step['deskripsi_tahapan'] ?? null,
                 'gambar_tahapan' => $path,
             ]);
         }
@@ -112,9 +107,8 @@ class ProcessingMethodController extends Controller
             'admin_id' => Auth::id(),
         ]);
 
-        return redirect()->route('admin.processing-methods.index');
+        return redirect()->route('admin.processing-methods.index')->with('success', 'Data berhasil diperbarui!');
     }
-
 
     public function destroy(ProcessingMethod $processingMethod)
     {
@@ -136,24 +130,8 @@ class ProcessingMethodController extends Controller
     }
 
     public function publicIndex()
-{
-    $methods = ProcessingMethod::with('steps')->get();
-
-    $flattenedSteps = $methods->flatMap(function ($method) {
-        return $method->steps->map(function ($step) use ($method) {
-            return [
-                'id' => $step->id,
-                'judul' => $method->judul,
-                'tahap_ke' => $step->tahap_ke,
-                'deskripsi_tahapan' => $step->deskripsi_tahapan,
-                'gambar_tahapan' => $step->gambar_tahapan,
-            ];
-        });
-    });
-
-    $methods = ProcessingMethod::all();
-    return Inertia::render('user/processing-methods', [
-        'methods' => $methods,
-    ]);
-}
+    {
+        $methods = ProcessingMethod::with('steps')->get();
+        return Inertia::render('user/processing-methods', ['methods' => $methods]);
+    }
 }

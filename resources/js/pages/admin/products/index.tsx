@@ -75,21 +75,21 @@ export default function ProductIndex({ products }: Props) {
           </div>
 
           {/* Tambah produk button */}
-            <div className="mb-4">
+          <div className="mb-4">
             <Link
-                href="/admin/products/create"
-                className="inline-block bg-blue-900 hover:bg-blue-950 text-white px-5 py-2 text-sm rounded-lg shadow transition"
+              href="/admin/products/create"
+              className="inline-block bg-blue-900 hover:bg-blue-950 text-white px-5 py-2 text-sm rounded-lg shadow transition"
             >
-                + Tambah
+              + Tambah
             </Link>
-            </div>
-
+          </div>
 
           {/* Table */}
           <div className="overflow-x-auto bg-white rounded-lg shadow">
             <table className="min-w-full text-sm text-gray-700">
               <thead className="bg-blue-50 text-gray-700">
                 <tr>
+                  <th className="p-4 text-left">No</th>
                   <th className="p-4 text-left">Nama</th>
                   <th className="p-4 text-left">Kategori</th>
                   <th className="p-4 text-left">Tipe</th>
@@ -99,7 +99,7 @@ export default function ProductIndex({ products }: Props) {
               <tbody>
                 {displayedProducts.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="text-center text-gray-500 p-6">
+                    <td colSpan={5} className="text-center text-gray-500 p-6">
                       Tidak ada produk ditemukan.
                     </td>
                   </tr>
@@ -109,6 +109,7 @@ export default function ProductIndex({ products }: Props) {
                       key={product.id}
                       className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
                     >
+                      <td className="p-4">{idx + 1}</td>
                       <td className="p-4">{product.name}</td>
                       <td className="p-4">{product.category}</td>
                       <td className="p-4">{product.type}</td>
