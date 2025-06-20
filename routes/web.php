@@ -16,18 +16,18 @@ Route::get('/time-line', function () {
     return Inertia::render('timeLine/time-line');
 })->name('timeLine');
 
+Route::get('/products', [ProductController::class, 'userIndex']);
+Route::get('/seaweed-type', [SeaweedTypeController::class, 'userIndex'])->name('seaweed-type.public.index');
+
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 });
 
-Route::get('/products', [ProductController::class, 'userIndex']);
-Route::get('/seaweed-type', [SeaweedTypeController::class, 'userIndex'])->name('seaweed-type.public.index');
-
 
 Route::get('/user/processing-methods', [ProcessingMethodController::class, 'publicIndex'])->name('processing-methods.public.index');
-
 
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
@@ -55,25 +55,25 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::put('/{id}', [SeaweedTypeController::class, 'update'])->name('update');
         Route::delete('/{id}', [SeaweedTypeController::class, 'destroy'])->name('destroy');
     });
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-    Route::get('/seaweed-types', [SeaweedTypeController::class, 'index'])->name('admin.seaweed-types.index');
-    Route::get('/seaweed-types/{seaweedType}/edit', [SeaweedTypeController::class, 'edit'])->name('admin.seaweed-types.edit');
-    Route::put('/seaweed-types/{seaweedType}', [SeaweedTypeController::class, 'update'])->name('admin.seaweed-types.update');
-});
+    Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+        Route::get('/seaweed-types', [SeaweedTypeController::class, 'index'])->name('admin.seaweed-types.index');
+        Route::get('/seaweed-types/{seaweedType}/edit', [SeaweedTypeController::class, 'edit'])->name('admin.seaweed-types.edit');
+        Route::put('/seaweed-types/{seaweedType}', [SeaweedTypeController::class, 'update'])->name('admin.seaweed-types.update');
+    });
     // Processing Methods untuk admin
     Route::resource('processing-methods', ProcessingMethodController::class);
     Route::put('/seaweed-types/{seaweedType}', [SeaweedTypeController::class, 'update'])->name('admin.seaweed-types.update');
 
+    Route::prefix('admin')->group(function () {
+        Route::get('/processing-methods', [ProcessingMethodController::class, 'index'])->name('admin.processing-methods.index');
+        Route::get('/processing-methods/create', [ProcessingMethodController::class, 'create'])->name('admin.processing-methods.create');
+        Route::post('/processing-methods', [ProcessingMethodController::class, 'store'])->name('admin.processing-methods.store');
+        Route::get('/processing-methods/{processingMethod}/edit', [ProcessingMethodController::class, 'edit'])->name('admin.processing-methods.edit');
+        Route::put('/processing-methods/{processingMethod}', [ProcessingMethodController::class, 'update'])->name('admin.processing-methods.update');
+        Route::delete('/processing-methods/{processingMethod}', [ProcessingMethodController::class, 'destroy'])->name('admin.processing-methods.destroy');
+    });
+});
 
-});
-Route::prefix('admin')->group(function () {
-    Route::get('/processing-methods', [ProcessingMethodController::class, 'index'])->name('admin.processing-methods.index');
-    Route::get('/processing-methods/create', [ProcessingMethodController::class, 'create'])->name('admin.processing-methods.create');
-    Route::post('/processing-methods', [ProcessingMethodController::class, 'store'])->name('admin.processing-methods.store');
-    Route::get('/processing-methods/{processingMethod}/edit', [ProcessingMethodController::class, 'edit'])->name('admin.processing-methods.edit');
-    Route::put('/processing-methods/{processingMethod}', [ProcessingMethodController::class, 'update'])->name('admin.processing-methods.update');
-    Route::delete('/processing-methods/{processingMethod}', [ProcessingMethodController::class, 'destroy'])->name('admin.processing-methods.destroy');
-});
 // Redirect to dashboard on /admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', function () {
@@ -83,8 +83,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 // Halaman processing method untuk user (public)
 Route::get('/user/processing-methods', [ProcessingMethodController::class, 'publicIndex'])->name('processing-methods.public.index');
 
-Route::get('/processing-methods', [ProcessingMethodController::class, 'publicIndex'])
-    ->name('processing-methods.public.index');
+Route::get('/processing-methods', [ProcessingMethodController::class, 'publicIndex'])->name('processing-methods.public.index');
 
     Route::get('/admin/products', [ProductController::class, 'index'])->name('products.index');
 
