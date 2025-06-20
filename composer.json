@@ -64,7 +64,8 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
-        ]
+        ],
+        "build": "npm run build"
     },
     "extra": {
         "laravel": {
