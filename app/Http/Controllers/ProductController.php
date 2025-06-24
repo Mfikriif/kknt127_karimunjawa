@@ -40,7 +40,7 @@ class ProductController extends Controller
         $product = Product::create($validated);
 
         AdminActivity::create([
-            'description' => '➕ Produk "' . $product->name . '" berhasil ditambahkan',
+            'description' => 'Produk "' . $product->name . '" berhasil ditambahkan',
             'admin_id' => Auth::id(),
         ]);
 
@@ -53,48 +53,48 @@ class ProductController extends Controller
     }
 
     public function update(Request $request, Product $product)
-{
-   $validated = $request->validate([
-    'name' => 'sometimes|required|string|max:255',
-    'category' => 'sometimes|required|string',
-    'type' => 'sometimes|required|string',
-    'description' => 'sometimes|nullable|string',
-    'link' => 'sometimes|nullable|string|max:255',
-    'gambar' => 'sometimes|nullable|image|max:2048',
-]);
+    {
+    $validated = $request->validate([
+        'name' => 'sometimes|required|string|max:255',
+        'category' => 'sometimes|required|string',
+        'type' => 'sometimes|required|string',
+        'description' => 'sometimes|nullable|string',
+        'link' => 'sometimes|nullable|string|max:255',
+        'gambar' => 'sometimes|nullable|image|max:2048',
+    ]);
 
 
-    if ($request->hasFile('gambar')) {
+        if ($request->hasFile('gambar')) {
+            if ($product->gambar) {
+                Storage::disk('public')->delete($product->gambar);
+            }
+            $validated['gambar'] = $request->file('gambar')->store('products', 'public');
+        }
+
+        $product->update($validated);
+
+        AdminActivity::create([
+            'description' => '🔄 Produk "' . $product->name . '" diperbarui',
+            'admin_id' => Auth::id(),
+        ]);
+
+        return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui!');
+    }
+    public function destroy(Product $product)
+    {
         if ($product->gambar) {
             Storage::disk('public')->delete($product->gambar);
         }
-        $validated['gambar'] = $request->file('gambar')->store('products', 'public');
+
+        $product->delete();
+
+        AdminActivity::create([
+            'description' => '🗑️ Produk "' . $product->name . '" dihapus',
+            'admin_id' => Auth::id(),
+        ]);
+
+        return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus!');
     }
-
-    $product->update($validated);
-
-    AdminActivity::create([
-        'description' => '🔄 Produk "' . $product->name . '" diperbarui',
-        'admin_id' => Auth::id(),
-    ]);
-
-    return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui!');
-}
-public function destroy(Product $product)
-{
-    if ($product->gambar) {
-        Storage::disk('public')->delete($product->gambar);
-    }
-
-    $product->delete();
-
-    AdminActivity::create([
-        'description' => '🗑️ Produk "' . $product->name . '" dihapus',
-        'admin_id' => Auth::id(),
-    ]);
-
-    return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus!');
-}
 
 
     public function userIndex()
