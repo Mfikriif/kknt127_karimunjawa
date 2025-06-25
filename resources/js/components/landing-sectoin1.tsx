@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 export default function LandingSection1() {
-    const asset = 'image/karimunjawa.jpg';
+    const asset = 'image/bg-landing.jpg';
 
     const zoomRef = useRef<HTMLDivElement>(null);
     const textRef = useRef<HTMLDivElement>(null);

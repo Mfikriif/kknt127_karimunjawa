@@ -5,28 +5,23 @@ import { Head } from '@inertiajs/react';
 export default function TimeLine() {
     const dosenImage = [
         {
-            nama: 'Muhammad Fathul Hidayat, S.Pd.I., M.Pd.',
-            image: 'imageassets/bagisahur1.jpg',
+            nama: 'Dr. Diana Chilmawati, S.Pi., M.Si.',
+            image: 'imageassets/budiana.png',
             fakultas: 'Fakultas Perikanan dan Ilmu Kelautan',
         },
         {
-            nama: 'Irawan, S.Pd.I., M.Pd.',
-            image: 'imageassets/bagisahur1.jpg',
+            nama: 'Dr. Trisnani Dwi H, S.Pi., M.Si.',
+            image: 'imageassets/bunina.png',
             fakultas: 'Fakultas Perikanan dan Kelautan',
         },
         {
-            nama: 'Suciati, S.Pd.I., M.Pd.',
-            image: 'imageassets/bagisahur1.jpg',
+            nama: 'Tristiana Yuniarti, S.Pi., M.Si.',
+            image: 'imageassets/buyuni.jpeg',
             fakultas: 'Fakultas Perikanan dan Kelautan',
         },
         {
-            nama: 'pranasari, S.Pd.I., M.Pd.',
-            image: 'imageassets/bagisahur1.jpg',
-            fakultas: 'Fakultas Perikanan dan Kelautan',
-        },
-        {
-            nama: 'pranasari, S.Pd.I., M.Pd.',
-            image: 'imageassets/bagisahur1.jpg',
+            nama: 'Pranata Candra P.P,S.PI.,M.Ling',
+            image: 'imageassets/Pranata.png',
             fakultas: 'Fakultas Perikanan dan Kelautan',
         },
     ];

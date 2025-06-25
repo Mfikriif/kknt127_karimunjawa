@@ -16,7 +16,7 @@ Route::get('/time-line', function () {
     return Inertia::render('timeLine/time-line');
 })->name('timeLine');
 
-Route::get('/products', [ProductController::class, 'userIndex']);
+Route::get('/products', [ProductController::class, 'productIndex'])->name('products.index');
 Route::get('/seaweed-type', [SeaweedTypeController::class, 'userIndex'])->name('seaweed-type.public.index');
 
 
@@ -74,18 +74,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     });
 });
 
-// Redirect to dashboard on /admin
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/', function () {
-        return redirect()->route('admin.dashboard');
-    });
-});
-// Halaman processing method untuk user (public)
-Route::get('/user/processing-methods', [ProcessingMethodController::class, 'publicIndex'])->name('processing-methods.public.index');
-
-Route::get('/processing-methods', [ProcessingMethodController::class, 'publicIndex'])->name('processing-methods.public.index');
-
-    Route::get('/admin/products', [ProductController::class, 'index'])->name('products.index');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

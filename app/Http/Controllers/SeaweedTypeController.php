@@ -102,6 +102,6 @@ class SeaweedTypeController extends Controller
     public function userIndex()
     {
         $seaweedTypes = SeaweedType::all();
-        return Inertia::render('user/seaweed-type', ['seaweedTypes' => $seaweedTypes]);
+        return Inertia::render('products/seaweed-type', ['seaweedTypes' => $seaweedTypes]);
     }
 }

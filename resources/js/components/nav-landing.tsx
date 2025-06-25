@@ -41,7 +41,7 @@ export default function NavLanding() {
                     </li>
                     <li>
                         <a href="/products" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Produk Hasil Olahan
+                            Hasil Sumber Daya Alam Desa Kemujan
                         </a>
                     </li>
                     <li>
