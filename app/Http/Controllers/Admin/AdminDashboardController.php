@@ -16,8 +16,7 @@ class AdminDashboardController extends Controller
         return Inertia::render('admin/AdminDashboard', [
             'totalProduk' => Product::count(),
             'jenisRumputLaut' => SeaweedType::count(),
-            'metodePengolahan' => ProcessingMethod::count(),
-            'aktivitas' => DB::table('admin_activities') // ✅ ganti dari activity_logs ke table yang ada
+            'aktivitas' => DB::table('admin_activities') 
                 ->orderBy('created_at', 'desc')
                 ->take(5)
                 ->get(['id', 'description', 'created_at']),

@@ -19,11 +19,11 @@ export default function AdminDashboard(props: DashboardProps) {
 
   const stats = [
     {
-      label: 'Total Produk',
+      label: 'Hasil Alam',
       value: totalProduk,
       icon: <FaBoxOpen className="text-blue-500 text-3xl" />,
       color: 'text-blue-600',
-      desc: 'Jumlah Postingan Produk',
+      desc: 'Jumlah Postingan',
     },
     {
       label: 'Jenis Rumput Laut',
@@ -32,19 +32,12 @@ export default function AdminDashboard(props: DashboardProps) {
       color: 'text-green-600',
       desc: 'Jumlah Postingan Rumput Laut',
     },
-    {
-      label: 'Metode Pengolahan',
-      value: metodePengolahan,
-      icon: <FaCogs className="text-purple-500 text-3xl" />,
-      color: 'text-purple-600',
-      desc: 'Jumlah Postingan Cara Pengolahan',
-    },
   ];
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-100">
       <AdminSidebar />
-      <div className="flex flex-col flex-1">
+      <div className="ml-72 flex flex-col flex-1">
         <AdminNavbar />
         <main className="p-8">
           <h1 className="text-3xl font-bold text-slate-800 mb-8">Dashboard</h1>

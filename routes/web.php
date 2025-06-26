@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SeaweedTypeController;
-use App\Http\Controllers\ProcessingMethodController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\AdminAuthController;
 
@@ -31,7 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 
-Route::get('/user/processing-methods', [ProcessingMethodController::class, 'publicIndex'])->name('processing-methods.public.index');
+
 
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
@@ -65,17 +64,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::put('/seaweed-types/{seaweedType}', [SeaweedTypeController::class, 'update'])->name('admin.seaweed-types.update');
     });
     // Processing Methods untuk admin
-    Route::resource('processing-methods', ProcessingMethodController::class);
     Route::put('/seaweed-types/{seaweedType}', [SeaweedTypeController::class, 'update'])->name('admin.seaweed-types.update');
-
-    Route::prefix('admin')->group(function () {
-        Route::get('/processing-methods', [ProcessingMethodController::class, 'index'])->name('admin.processing-methods.index');
-        Route::get('/processing-methods/create', [ProcessingMethodController::class, 'create'])->name('admin.processing-methods.create');
-        Route::post('/processing-methods', [ProcessingMethodController::class, 'store'])->name('admin.processing-methods.store');
-        Route::get('/processing-methods/{processingMethod}/edit', [ProcessingMethodController::class, 'edit'])->name('admin.processing-methods.edit');
-        Route::put('/processing-methods/{processingMethod}', [ProcessingMethodController::class, 'update'])->name('admin.processing-methods.update');
-        Route::delete('/processing-methods/{processingMethod}', [ProcessingMethodController::class, 'destroy'])->name('admin.processing-methods.destroy');
-    });
 });
 
 

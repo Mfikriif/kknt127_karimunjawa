@@ -23,7 +23,7 @@ export default function AdminSidebar() {
             color: 'from-indigo-500 to-blue-600',
         },
         {
-            label: 'Produk',
+            label: 'Hasil Alam',
             icon: <FaBoxOpen />,
             href: '/admin/products',
             color: 'from-green-500 to-green-600',
@@ -34,16 +34,10 @@ export default function AdminSidebar() {
             href: '/admin/seaweed-types',
             color: 'from-emerald-500 to-teal-500',
         },
-        {
-            label: 'Cara Pengolahan',
-            icon: <FaCogs />,
-            href: '/admin/processing-methods',
-            color: 'from-purple-500 to-pink-500',
-        },
     ];
 
     return (
-        <aside className="w-72 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white min-h-screen shadow-xl relative overflow-hidden">
+        <aside className="fixed top-0 left-0 w-72 h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white shadow-xl overflow-y-auto z-50">
             <div className="p-6">
                 <div className="flex items-center gap-3 mb-10">
                     <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
