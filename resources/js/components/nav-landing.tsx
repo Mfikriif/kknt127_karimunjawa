@@ -50,18 +50,8 @@ export default function NavLanding() {
                         </a>
                     </li>
                     <li>
-                        <a href="/processing-methods" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Cara Pengolahan
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#services" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Services
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#contact" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Contact
+                        <a href="/budidaya-rula" className="block hover:text-blue-400" onClick={toggleMenu}>
+                            Peta Lokasi Budidaya Rumput Laut
                         </a>
                     </li>
                 </ul>

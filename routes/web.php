@@ -16,6 +16,10 @@ Route::get('/time-line', function () {
     return Inertia::render('timeLine/time-line');
 })->name('timeLine');
 
+Route::get('/budidaya-rula', function () {
+    return Inertia::render('petalokasi/budiDaya');
+})->name('budidayaRula');
+
 Route::get('/products', [ProductController::class, 'productIndex'])->name('products.index');
 Route::get('/seaweed-type', [SeaweedTypeController::class, 'userIndex'])->name('seaweed-type.public.index');
 
