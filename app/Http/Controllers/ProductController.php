@@ -97,9 +97,9 @@ class ProductController extends Controller
     }
 
 
-    public function userIndex()
+    public function productIndex()
     {
         $products = Product::all();
-        return Inertia::render('user/products', ['products' => $products]);
+        return Inertia::render('products/product', ['products' => $products]);
     }
 }
