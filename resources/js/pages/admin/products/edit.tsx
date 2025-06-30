@@ -28,11 +28,11 @@ export default function EditProduct({ product }: Props) {
   });
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [fileName, setFileName] = useState<string>(''); // nama file terpilih
+  const [fileName, setFileName] = useState<string>(''); 
 
   useEffect(() => {
     if (product.image) {
-      setPreviewImage(`/storage/${product.image}`); // Sesuaikan dengan path storage Laravel
+      setPreviewImage(`/storage/${product.image}`); 
     }
   }, [product.image]);
 

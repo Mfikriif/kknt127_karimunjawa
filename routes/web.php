@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SeaweedTypeController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\HasilAlamController;
 
 Route::get('/', function () {
     return Inertia::render('landingPage/home-page');
@@ -67,6 +68,18 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::put('/seaweed-types/{seaweedType}', [SeaweedTypeController::class, 'update'])->name('admin.seaweed-types.update');
 });
 
+// routes/web.php
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/hasil-alam', [HasilAlamController::class, 'index'])->name('hasil-alam.index');
+    Route::get('/hasil-alam/create', [HasilAlamController::class, 'create'])->name('hasil-alam.create');
+    Route::post('/hasil-alam', [HasilAlamController::class, 'store'])->name('hasil-alam.store');
+    Route::get('/hasil-alam/{hasilAlam}/edit', [HasilAlamController::class, 'edit'])->name('hasil-alam.edit');
+    Route::put('/hasil-alam/{hasilAlam}', [HasilAlamController::class, 'update'])->name('hasil-alam.update');
+    Route::delete('/hasil-alam/{hasilAlam}', [HasilAlamController::class, 'destroy'])->name('hasil-alam.destroy');
+});
+
+// Untuk user
+Route::get('/hasil-alam', [HasilAlamController::class, 'index'])->name('hasil-alam.public');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

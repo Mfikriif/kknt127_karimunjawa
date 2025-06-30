@@ -23,7 +23,7 @@ export default function AdminSidebar() {
             color: 'from-indigo-500 to-blue-600',
         },
         {
-            label: 'Hasil Alam',
+            label: 'Produk Olahan',
             icon: <FaBoxOpen />,
             href: '/admin/products',
             color: 'from-green-500 to-green-600',
@@ -32,6 +32,12 @@ export default function AdminSidebar() {
             label: 'Jenis Rumput Laut',
             icon: <FaLeaf />,
             href: '/admin/seaweed-types',
+            color: 'from-emerald-500 to-teal-500',
+        },
+        {
+            label: 'Hasil Alam',
+            icon: <FaLeaf />,
+            href: '/admin/hasil-alam',
             color: 'from-emerald-500 to-teal-500',
         },
     ];
