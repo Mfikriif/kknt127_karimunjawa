@@ -16,7 +16,7 @@ export default function TimeLine() {
         },
         {
             nama: 'Tristiana Yuniarti, S.Pi., M.Si.',
-            image: 'imageassets/buyuni.jpeg',
+            image: 'imageassets/buyuni.png',
             fakultas: 'Fakultas Perikanan dan Kelautan',
         },
         {
@@ -40,8 +40,9 @@ export default function TimeLine() {
         {
             title: 'Kegiatan Fase 2',
             media: [
-                { type: 'image', src: 'imageassets/penyerahanbibit.jpg' },
-                { type: 'image', src: 'imageassets/aksibersihpantai.jpg' },
+                { type: 'image', src: 'imageassets/image.png' },
+                { type: 'image', src: 'imageassets/penyuluhanitmamul.jpg' },
+                { type: 'image', src: 'imageassets/nobarfase2.jpg' },
             ],
             description: 'Deskripsi kegiatan 2 yang dilakukan pada tanggal tertentu.',
             date: '28 Mei 2025 - 10 Juni 2025',
@@ -49,8 +50,8 @@ export default function TimeLine() {
         {
             title: 'Kegiatan Fase 3',
             media: [
-                { type: 'image', src: 'imageassets/penyerahanbibit.jpg' },
-                { type: 'image', src: 'imageassets/aksibersihpantai.jpg' },
+                { type: 'image', src: 'imageassets/penerjunanfase3.jpg' },
+                { type: 'image', src: 'imageassets/survey1.jpg' },
                 { type: 'video', src: 'videoassets/pengambilantitik.mp4' },
             ],
             description:
