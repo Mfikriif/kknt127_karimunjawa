@@ -72,16 +72,6 @@ export default function TimeLine() {
             fakultas: 'Fakultas Sains dan Matematika',
             jurusan: 'S1 Informatika',
         },
-        {
-            nama: 'Dr. Trisnani Dwi H, S.Pi., M.Si.',
-            image: 'imageassets/Pranata.png',
-            fakultas: 'Fakultas Perikanan dan Kelautan',
-        },
-        {
-            nama: 'Tristiana Yuniarti, S.Pi., M.Si.',
-            image: 'imageassets/buyuni.jpeg',
-            fakultas: 'Fakultas Perikanan dan Kelautan',
-        },
     ];
 
     return (
