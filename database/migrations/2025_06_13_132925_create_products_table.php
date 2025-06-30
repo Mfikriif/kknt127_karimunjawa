@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('gambar')->nullable(); 
             $table->text('description')->nullable();
-            $table->enum('category', ['rumput_laut', 'ikan', 'udang', 'lainnya']);
+            $table->enum('category', ['rumput_laut', 'ikan', 'mete', 'lainnya']);
             $table->enum('type', ['mentah', 'olahan']);
             $table->text('link')->nullable(); 
             $table->timestamps();

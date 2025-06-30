@@ -41,12 +41,17 @@ export default function NavLanding() {
                     </li>
                     <li>
                         <a href="/products" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Hasil Sumber Daya Alam Desa Kemujan
+                            Produk Olahan dari Desa Kemujan
                         </a>
                     </li>
                     <li>
                         <a href="/seaweed-type" className="block hover:text-blue-400" onClick={toggleMenu}>
                             Jenis-Jenis Rumput Laut
+                        </a>
+                    </li>
+                     <li>
+                        <a href="/hasil-alam" className="block hover:text-blue-400" onClick={toggleMenu}>
+                            Hasil Sumber Daya Alam Desa Kemujan
                         </a>
                     </li>
                     <li>
