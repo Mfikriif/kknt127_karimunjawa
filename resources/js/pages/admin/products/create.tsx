@@ -44,7 +44,7 @@ export default function CreateProduct() {
       <Head title="Tambah Produk" />
       <div className="flex min-h-screen bg-gray-100">
         <AdminSidebar />
-        <div className="flex-1 flex flex-col">
+        <div className="ml-72 flex-1 flex flex-col">
           <AdminNavbar />
           <main className="flex-1 p-6 md:p-10 overflow-auto bg-gray-100">
             <div className="max-w-3xl mx-auto">
@@ -89,8 +89,8 @@ export default function CreateProduct() {
                         <option value="">-- Pilih Kategori --</option>
                         <option value="rumput_laut">Rumput Laut</option>
                         <option value="ikan">Ikan</option>
-                        <option value="udang">Udang</option>
-                        <option value="kerang">Kerang</option>
+                        <option value="Mete">Mete</option>
+                        <option value="lainnya">Lainnya</option>
                       </select>
                       {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
                     </div>
