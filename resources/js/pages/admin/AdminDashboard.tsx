@@ -1,11 +1,11 @@
 import AdminNavbar from '@/components/AdminNavbar';
 import AdminSidebar from '@/components/AdminSidebar';
-import { FaBoxOpen, FaClock, FaCogs, FaLeaf } from 'react-icons/fa';
+import { FaBoxOpen, FaClock, FaLeaf } from 'react-icons/fa';
 
 type DashboardProps = {
     totalProduk: number;
     jenisRumputLaut: number;
-    metodePengolahan: number;
+    hasilAlam: number;
     aktivitas: {
         id: number;
         description: string;
@@ -14,15 +14,15 @@ type DashboardProps = {
 };
 
 export default function AdminDashboard(props: DashboardProps) {
-    const { totalProduk, jenisRumputLaut, metodePengolahan, aktivitas } = props;
+    const { totalProduk, jenisRumputLaut, hasilAlam, aktivitas } = props;
 
     const stats = [
         {
-            label: 'Total Produk',
+            label: 'Produk Olahan',
             value: totalProduk,
             icon: <FaBoxOpen className="text-3xl text-blue-500" />,
             color: 'text-blue-600',
-            desc: 'Jumlah Postingan Produk',
+            desc: 'Jumlah Postingan',
         },
         {
             label: 'Jenis Rumput Laut',
@@ -32,18 +32,18 @@ export default function AdminDashboard(props: DashboardProps) {
             desc: 'Jumlah Postingan Rumput Laut',
         },
         {
-            label: 'Metode Pengolahan',
-            value: metodePengolahan,
-            icon: <FaCogs className="text-3xl text-purple-500" />,
-            color: 'text-purple-600',
-            desc: 'Jumlah Postingan Cara Pengolahan',
+            label: 'Hasil Alam',
+            value: hasilAlam,
+            icon: <FaLeaf className="text-3xl text-green-500" />,
+            color: 'text-green-600',
+            desc: 'Jumlah Postingan',
         },
     ];
 
     return (
         <div className="flex min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-100">
             <AdminSidebar />
-            <div className="flex flex-1 flex-col">
+            <div className="ml-72 flex flex-1 flex-col">
                 <AdminNavbar />
                 <main className="p-8">
                     <h1 className="mb-8 text-3xl font-bold text-slate-800">Dashboard</h1>
