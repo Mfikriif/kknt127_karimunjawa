@@ -30,10 +30,12 @@ export default function TimeLine() {
         {
             title: 'Kegiatan Fase 1',
             description:
-                'Kegiatan fase dimulai pada tanggal 21 Mei 2025 sampai 30 Mei 2025. Kegiatan dimulai dengan penyerahan bibit rumput laut, hingga aksi bersh-bersih pantai.',
+                'Kegiatan fase dimulai pada tanggal 21 Mei 2025 sampai 30 Mei 2025. Kegiatan dimulai dengan penyerahan bibit rumput laut, melakukan penyuluhan, hingga aksi bersih-bersih pantai.',
             media: [
                 { type: 'image', src: 'imageassets/penyerahanbibit.jpg' },
+                { type: 'image', src: 'imageassets/penanamanbibit.PNG' },
                 { type: 'image', src: 'imageassets/aksibersihpantai.jpg' },
+                { type: 'image', src: 'imageassets/penyuluhanriska.jpg' },
             ],
             date: '21 Mei 2025 - 30 Mei 2025',
         },
@@ -42,20 +44,25 @@ export default function TimeLine() {
             media: [
                 { type: 'image', src: 'imageassets/image.png' },
                 { type: 'image', src: 'imageassets/penyuluhanitmamul.jpg' },
+                { type: 'image', src: 'imageassets/penyuluhannafisah2.png' },
                 { type: 'image', src: 'imageassets/nobarfase2.jpg' },
             ],
-            description: 'Deskripsi kegiatan 2 yang dilakukan pada tanggal tertentu.',
+            description:
+                'Kegiatan Fase 2 dimulai pada tanggal 28 Mei 2025 sampai 10 Juni 2025. Kegiatan ini dimulai dengan penyuluhan, Nonton bareng siswa-siswi di SDN 05 Kemujan.',
             date: '28 Mei 2025 - 10 Juni 2025',
         },
         {
             title: 'Kegiatan Fase 3',
             media: [
                 { type: 'image', src: 'imageassets/penerjunanfase3.jpg' },
-                { type: 'image', src: 'imageassets/survey1.jpg' },
+                { type: 'image', src: 'imageassets/survey2.jpg' },
+                { type: 'image', src: 'imageassets/wabisnis.jpg' },
+                { type: 'image', src: 'imageassets/logoumkm.jpg' },
+                { type: 'image', src: 'imageassets/wsfase3.jpg' },
                 { type: 'video', src: 'videoassets/pengambilantitik.mp4' },
             ],
             description:
-                'Kegiatan fase 3 dimulai dengan pemetaan lokasi budidaya rumput laut hingga kegiatan workshop untuk pelatihan serta pendampingan dalam melakukan digitalisasi produk.',
+                'Kegiatan fase 3 dimulai dengan pemetaan lokasi budidaya rumput laut, survey pelaku umkm, pembuatan wa bisnis dan logo umkm hingga kegiatan workshop untuk pelatihan serta pendampingan dalam melakukan digitalisasi produk.',
             date: '23 Juni 2025 - 4 Juli 2025',
         },
         {
@@ -72,6 +79,12 @@ export default function TimeLine() {
             fakultas: 'Fakultas Sains dan Matematika',
             jurusan: 'S1 Informatika',
         },
+        {
+            nama: 'Linda Ratna Kholifah',
+            image: 'imageassets/linda.jpg',
+            fakultas: 'Fakultas Teknik',
+            jurusan: 'S1 Teknik Komputer',
+        },
     ];
 
     return (
@@ -80,9 +93,15 @@ export default function TimeLine() {
             <Head title="Timeline KKNT Desa Kemujan Karimunjawa" />
             <section className="relative min-h-[100dvh] bg-[rgb(12,52,76)] px-4 py-16 sm:px-8 md:px-16 lg:px-24">
                 <div className="my-28">
-                    <h1 className="mx-auto mb-14 max-w-3xl text-center text-2xl font-bold tracking-wider text-white sm:text-3xl lg:text-4xl">
-                        DOSEN PEMBIMBING KKNT DESA KEMUJAN KARIMUNJAWA
-                    </h1>
+                    <div className="relative z-10 mb-16 text-center">
+                        <h1 className="mx-auto mb-5 max-w-3xl text-center text-2xl font-bold tracking-wider text-white sm:text-3xl lg:text-4xl">
+                            DOSEN PEMBIMBING<span className="text-[#64FFDA] drop-shadow-lg"> KKNT 127</span> DESA KEMUJAN KARMUNJAWA
+                        </h1>
+                        <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-300">
+                            Mari kita kenali dosen pembimbing yang telah berkontribusi dalam program KKNT Desa Kemujan Karimunjawa.
+                        </p>
+                    </div>
+
                     <div className="flex flex-row items-center justify-center">
                         <div className="mx-auto grid max-w-6xl grid-cols-1 justify-center gap-8 sm:grid-cols-2 md:grid-cols-2 md:gap-12 lg:grid-cols-3">
                             {dosenImage.map((dosen, index) => (
@@ -101,10 +120,15 @@ export default function TimeLine() {
                 </div>
             </section>
 
-            <section className="relative min-h-[100dvh] bg-[rgb(12,52,76)] px-4 py-16 sm:px-8 md:px-16 lg:px-24">
-                <h1 className="text-center text-white">
-                    <span className="text-2xl font-bold tracking-wider sm:text-3xl lg:text-4xl">Timeline KKNT Desa Kemujan Karimunjawa</span>
-                </h1>
+            <section className="relative bg-[rgb(12,52,76)] px-4 py-16 sm:px-8 md:px-16 lg:px-24">
+                <div className="relative z-10 mb-16 text-center">
+                    <h1 className="mx-auto mb-5 max-w-3xl text-center text-2xl font-bold tracking-wider text-white sm:text-3xl lg:text-4xl">
+                        Timeline<span className="text-[#64FFDA] drop-shadow-lg"> KKNT 127</span> DESA KEMUJAN KARMUNJAWA
+                    </h1>
+                    <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-300">
+                        Mari lihat lebih dekat kegiatan apa saja yang dilakukan oleh mahasiswa kknt 127 di desa kemujan
+                    </p>
+                </div>
                 <div className="mt-8">
                     <div className="mx-auto max-w-4xl">
                         <div className="relative">
@@ -112,7 +136,6 @@ export default function TimeLine() {
                             <div className="border-l-2 border-white pl-6">
                                 {timelineEvents.map((event, index) => (
                                     <div key={index} className="relative mb-16">
-                                        {' '}
                                         {/* Konten Event */}
                                         <div className="relative z-0 mt-2">
                                             {/* Judul, Tanggal, dan Deskripsi */}
@@ -122,41 +145,23 @@ export default function TimeLine() {
                                                 <p className="mt-2 text-gray-200">{event.description}</p>
                                             </div>
 
-                                            {/* Gambar dalam Grid */}
+                                            {/* Gambar dalam Kolom (Masonry Layout) - UPDATED */}
                                             {event.media && event.media.length > 0 && (
-                                                <div className="mt-6 grid auto-rows-[200px] grid-cols-1 gap-4 md:grid-cols-6">
+                                                // 1. Container now uses 'columns' instead of 'grid'
+                                                <div className="mt-6 columns-1 gap-4 sm:columns-2">
                                                     {event.media.map((item, index) => {
-                                                        // Grid layout logic
-                                                        let colSpan = 'md:col-span-2';
-                                                        let rowSpan = '';
-
-                                                        if (index % 5 === 0) {
-                                                            colSpan = 'md:col-span-3';
-                                                            rowSpan = 'row-span-2';
-                                                        } else if (index % 5 === 3) {
-                                                            colSpan = 'md:col-span-2';
-                                                            rowSpan = 'row-span-1';
-                                                        } else if (index % 5 === 4) {
-                                                            colSpan = 'md:col-span-1';
-                                                            rowSpan = 'row-span-2';
-                                                        }
-
+                                                        // 2. No more colSpan logic needed
                                                         return (
-                                                            <div key={index} className={`relative overflow-hidden rounded-lg ${colSpan} ${rowSpan}`}>
+                                                            // 3. Added classes to prevent items from breaking and to add space
+                                                            <div key={index} className="mb-4 break-inside-avoid">
                                                                 {item.type === 'image' ? (
                                                                     <img
                                                                         src={item.src}
                                                                         alt={`Media ${index + 1}`}
-                                                                        className="h-full w-full object-cover"
+                                                                        className="h-auto w-full rounded-lg"
                                                                     />
                                                                 ) : (
-                                                                    <video
-                                                                        src={item.src}
-                                                                        autoPlay
-                                                                        loop
-                                                                        muted
-                                                                        className="h-full w-full object-cover"
-                                                                    />
+                                                                    <video src={item.src} autoPlay loop muted className="h-auto w-full rounded-lg" />
                                                                 )}
                                                             </div>
                                                         );
@@ -174,9 +179,16 @@ export default function TimeLine() {
 
             <section className="relative min-h-[100dvh] bg-[rgb(12,52,76)] px-4 py-2 sm:px-8 md:px-16 lg:px-24">
                 <div className="my-28">
-                    <h1 className="mx-auto mb-14 max-w-3xl text-center text-2xl font-bold tracking-wider text-white sm:text-3xl lg:text-4xl">
-                        Management Website Desa Kemujan Karimunjawa
-                    </h1>
+                    <div className="relative z-10 mb-16 text-center">
+                        <h1 className="mx-auto mb-5 max-w-3xl text-center text-2xl font-bold tracking-wider text-white sm:text-3xl lg:text-4xl">
+                            Management<span className="text-[#64FFDA] drop-shadow-lg"> Website</span> Desa Kemujan Karimunjawa
+                        </h1>
+                        <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-300">
+                            Kenali tim yang mengelola dan mengembangkan website Desa Kemujan Karimunjawa untuk memberikan informasi yang akurat dan
+                            terkini.
+                        </p>
+                    </div>
+
                     <div className="flex flex-row items-center justify-center">
                         <div className="mx-auto grid max-w-6xl grid-cols-1 justify-center gap-8 sm:grid-cols-2 md:grid-cols-2 md:gap-12 lg:grid-cols-3">
                             {managementWeb.map((manage, index) => (
