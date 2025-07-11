@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { router } from '@inertiajs/react';
+import { Head, useForm, router } from '@inertiajs/react';
 import AdminSidebar from '@/components/AdminSidebar';
 import AdminNavbar from '@/components/AdminNavbar';
 
@@ -16,149 +16,147 @@ type Props = {
 };
 
 export default function EditSeaweedType({ seaweedType }: Props) {
-  const [name, setName] = useState('');
-  const [characteristics, setCharacteristics] = useState('');
-  const [benefits, setBenefits] = useState('');
-  const [image, setImage] = useState<File | null>(null);
+  const { data, setData, processing, errors } = useForm({
+    name: seaweedType.name || '',
+    characteristics: seaweedType.characteristics || '',
+    benefits: seaweedType.benefits || '',
+    image: null as File | null,
+  });
+
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string>('');
 
   useEffect(() => {
-    if (seaweedType) {
-      setName(seaweedType.name || '');
-      setCharacteristics(seaweedType.characteristics || '');
-      setBenefits(seaweedType.benefits || '');
-      if (seaweedType.image) {
-        setPreviewUrl(`/storage/${seaweedType.image}`);
-      }
+    if (seaweedType.image) {
+      setPreviewUrl(`/storage/${seaweedType.image}`);
     }
-  }, [seaweedType]);
+  }, [seaweedType.image]);
 
-  useEffect(() => {
-    if (image) {
-      const objectUrl = URL.createObjectURL(image);
-      setPreviewUrl(objectUrl);
-      return () => URL.revokeObjectURL(objectUrl);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setData('image', file);
+      setPreviewUrl(URL.createObjectURL(file));
+      setFileName(file.name);
     }
-  }, [image]);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('characteristics', characteristics);
-    formData.append('benefits', benefits);
-    if (image) {
-      formData.append('image', image);
+    formData.append('name', data.name);
+    formData.append('characteristics', data.characteristics);
+    formData.append('benefits', data.benefits);
+    if (data.image) {
+      formData.append('image', data.image);
     }
 
-    router.visit(`/admin/seaweed-types/${seaweedType.id}`, {
-      method: 'put',
-      data: formData,
+    formData.append('_method', 'PUT');
+
+    router.post(`/admin/seaweed-types/${seaweedType.id}`, formData, {
       forceFormData: true,
       preserveScroll: true,
       onSuccess: () => {
-        console.log('Data updated successfully');
-      },
-      onError: (errors) => {
-        console.error('Validation errors:', errors);
+        router.visit('/admin/seaweed-types');
       },
     });
   };
 
   return (
-    <div className="flex min-h-screen bg-white">
-      <AdminSidebar />
+    <>
+      <Head title="Edit Jenis Rumput Laut" />
+      <div className="flex min-h-screen bg-gray-100">
+        <AdminSidebar />
+        <div className="ml-72 flex-1 flex flex-col">
+          <AdminNavbar />
+          <main className="flex-1 p-6 md:p-10 overflow-auto bg-gray-100">
+            <div className="max-w-3xl mx-auto">
+              <h1 className="text-3xl font-semibold text-gray-800 mb-6">Edit Jenis Rumput Laut</h1>
 
-      <div className="ml-72 flex-1 flex flex-col">
-        <AdminNavbar />
-
-        <main className="flex-1 p-8 max-w-5xl mx-auto">
-          <h1 className="text-3xl font-extrabold mb-8 text-black drop-shadow-sm">
-            Edit Jenis Rumput Laut
-          </h1>
-
-          <form
-            onSubmit={handleSubmit}
-            encType="multipart/form-data"
-            className="bg-white rounded-xl shadow-xl p-8 space-y-6"
-          >
-            <div className="grid grid-cols-2 gap-x-8 gap-y-6 items-start">
-              {/* Nama */}
-              <label htmlFor="name" className="text-gray-700 font-semibold pt-3">
-                Nama
-              </label>
-              <input
-                id="name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
-                required
-              />
-
-              {/* Karakteristik */}
-              <label htmlFor="characteristics" className="text-gray-700 font-semibold pt-3">
-                Karakteristik
-              </label>
-              <textarea
-                id="characteristics"
-                value={characteristics}
-                onChange={(e) => setCharacteristics(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
-                rows={4}
-              />
-
-              {/* Manfaat */}
-              <label htmlFor="benefits" className="text-gray-700 font-semibold pt-3">
-                Manfaat
-              </label>
-              <textarea
-                id="benefits"
-                value={benefits}
-                onChange={(e) => setBenefits(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
-                rows={4}
-              />
-
-              {/* Gambar Baru */}
-              <label htmlFor="image" className="text-gray-700 font-semibold pt-3">
-                Gambar Baru (jika ingin mengganti)
-              </label>
-              <div>
-                <input
-                  id="image"
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setImage(e.target.files?.[0] || null)}
-                  className="block w-full text-gray-600 file:mr-4 file:py-2 file:px-4
-                    file:rounded file:border-0
-                    file:text-sm file:font-semibold
-                    file:bg-blue-100 file:text-blue-700
-                    hover:file:bg-blue-200 transition cursor-pointer"
-                />
-                {previewUrl && (
-                  <img
-                    src={previewUrl}
-                    alt="Preview Gambar"
-                    className="mt-4 w-48 h-48 object-cover rounded-lg border border-gray-300 shadow-md"
-                  />
-                )}
-              </div>
-            </div>
-
-            {/* Tombol Update */}
-            <div className="flex justify-end">
-              <button
-                type="submit"
-                className="bg-blue-900 text-white py-2 px-5 rounded-md text-sm font-semibold hover:bg-blue-950 transition shadow-md"
+              <form
+                onSubmit={handleSubmit}
+                encType="multipart/form-data"
+                className="bg-white p-8 rounded-2xl shadow-xl space-y-6"
               >
-                Update
-              </button>
+                {/* Nama */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Nama</label>
+                  <input
+                    type="text"
+                    value={data.name}
+                    onChange={e => setData('name', e.target.value)}
+                    className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Masukkan nama jenis rumput laut"
+                  />
+                  {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+                </div>
+
+                {/* Karakteristik */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Karakteristik</label>
+                  <textarea
+                    value={data.characteristics}
+                    onChange={e => setData('characteristics', e.target.value)}
+                    rows={3}
+                    className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Deskripsikan karakteristik rumput laut"
+                  ></textarea>
+                  {errors.characteristics && <p className="text-red-500 text-sm mt-1">{errors.characteristics}</p>}
+                </div>
+
+                {/* Manfaat */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Manfaat</label>
+                  <textarea
+                    value={data.benefits}
+                    onChange={e => setData('benefits', e.target.value)}
+                    rows={3}
+                    className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Tuliskan manfaat dari rumput laut ini"
+                  ></textarea>
+                  {errors.benefits && <p className="text-red-500 text-sm mt-1">{errors.benefits}</p>}
+                </div>
+
+                {/* Gambar */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Ganti Gambar (Opsional)</label>
+
+                  <div className="flex items-center gap-4 mb-2">
+                    {previewUrl && (
+                      <img
+                        src={previewUrl}
+                        alt="Preview"
+                        className="h-20 w-20 object-cover rounded-md border"
+                      />
+                    )}
+                    {fileName && <p className="text-gray-600 text-sm">{fileName}</p>}
+                  </div>
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                  {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image}</p>}
+                </div>
+
+                {/* Tombol Submit */}
+                <div className="text-right">
+                  <button
+                    type="submit"
+                    disabled={processing}
+                    className="bg-blue-900 hover:bg-blue-950 text-white font-medium px-6 py-2 rounded-md transition disabled:opacity-50"
+                  >
+                    Update
+                  </button>
+                </div>
+              </form>
             </div>
-          </form>
-        </main>
+          </main>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

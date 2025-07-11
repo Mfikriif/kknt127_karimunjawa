@@ -74,7 +74,7 @@ class ProductController extends Controller
         $product->update($validated);
 
         AdminActivity::create([
-            'description' => '🔄 Produk "' . $product->name . '" diperbarui',
+            'description' => 'Produk "' . $product->name . '" diperbarui',
             'admin_id' => Auth::id(),
         ]);
 
@@ -89,7 +89,7 @@ class ProductController extends Controller
         $product->delete();
 
         AdminActivity::create([
-            'description' => '🗑️ Produk "' . $product->name . '" dihapus',
+            'description' => 'Produk "' . $product->name . '" dihapus',
             'admin_id' => Auth::id(),
         ]);
 
