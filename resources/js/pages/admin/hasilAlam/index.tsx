@@ -85,6 +85,7 @@ export default function Index() {
             <table className="min-w-full text-sm text-gray-700">
               <thead className="bg-blue-50 text-gray-700">
                 <tr>
+                  <th className="p-4 text-left">No</th>
                   <th className="p-4 text-left">Nama</th>
                   <th className="p-4 text-left">Deskripsi</th>
                   <th className="p-4 text-left">Kategori</th>
@@ -95,7 +96,7 @@ export default function Index() {
               <tbody>
                 {displayedResources.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="text-center text-gray-500 p-6">
+                    <td colSpan={6} className="text-center text-gray-500 p-6">
                       Tidak ada data hasil alam.
                     </td>
                   </tr>
@@ -105,6 +106,7 @@ export default function Index() {
                       key={item.id}
                       className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
                     >
+                      <td className="p-4">{idx + 1}</td>
                       <td className="p-4">{item.nama}</td>
                       <td className="p-4">{item.deskripsi}</td>
                       <td className="p-4 capitalize">{item.kategori}</td>

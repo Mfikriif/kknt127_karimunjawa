@@ -22,7 +22,7 @@ Route::get('/budidaya-rula', function () {
 
 Route::get('/products', [ProductController::class, 'productIndex'])->name('products.index');
 Route::get('/seaweed-type', [SeaweedTypeController::class, 'userIndex'])->name('seaweed-type.public.index');
-
+Route::get('/hasil-alam', [HasilAlamController::class, 'index'])->name('hasil-alam.public');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 
-
+// admin auth
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminAuthController::class, 'login']);
@@ -40,36 +40,23 @@ Route::prefix('admin')->group(function () {
 });
 
 
+// admin panel
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    // Dashboard
+    // dashboard
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-    // Products
+    // products
     Route::resource('products', ProductController::class);
-    Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('edit');
 
+    // seaweed types
+    Route::get('/seaweed-types', [SeaweedTypeController::class, 'index'])->name('seaweed-types.index');
+    Route::get('/seaweed-types/create', [SeaweedTypeController::class, 'create'])->name('seaweed-types.create');
+    Route::post('/seaweed-types', [SeaweedTypeController::class, 'store'])->name('seaweed-types.store');
+    Route::get('/seaweed-types/{seaweedType}/edit', [SeaweedTypeController::class, 'edit'])->name('seaweed-types.edit');
+    Route::put('/seaweed-types/{seaweedType}', [SeaweedTypeController::class, 'update'])->name('seaweed-types.update');
+    Route::delete('/seaweed-types/{seaweedType}', [SeaweedTypeController::class, 'destroy'])->name('seaweed-types.destroy');
 
-    // Seaweed Types
-    Route::prefix('seaweed-types')->name('seaweed-types.')->group(function () {
-        Route::get('/', [SeaweedTypeController::class, 'index'])->name('index');
-        Route::get('/create', [SeaweedTypeController::class, 'create'])->name('create');
-        Route::post('/', [SeaweedTypeController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [SeaweedTypeController::class, 'edit'])->name('edit');
-        Route::get('/{seaweedType}/edit', [SeaweedTypeController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [SeaweedTypeController::class, 'update'])->name('update');
-        Route::delete('/{id}', [SeaweedTypeController::class, 'destroy'])->name('destroy');
-    });
-    Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-        Route::get('/seaweed-types', [SeaweedTypeController::class, 'index'])->name('admin.seaweed-types.index');
-        Route::get('/seaweed-types/{seaweedType}/edit', [SeaweedTypeController::class, 'edit'])->name('admin.seaweed-types.edit');
-        Route::put('/seaweed-types/{seaweedType}', [SeaweedTypeController::class, 'update'])->name('admin.seaweed-types.update');
-    });
-    // Processing Methods untuk admin
-    Route::put('/seaweed-types/{seaweedType}', [SeaweedTypeController::class, 'update'])->name('admin.seaweed-types.update');
-});
-
-// routes/web.php
-Route::prefix('admin')->name('admin.')->group(function () {
+    // hasil alam
     Route::get('/hasil-alam', [HasilAlamController::class, 'index'])->name('hasil-alam.index');
     Route::get('/hasil-alam/create', [HasilAlamController::class, 'create'])->name('hasil-alam.create');
     Route::post('/hasil-alam', [HasilAlamController::class, 'store'])->name('hasil-alam.store');
@@ -77,9 +64,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/hasil-alam/{hasilAlam}', [HasilAlamController::class, 'update'])->name('hasil-alam.update');
     Route::delete('/hasil-alam/{hasilAlam}', [HasilAlamController::class, 'destroy'])->name('hasil-alam.destroy');
 });
-
-// Untuk user
-Route::get('/hasil-alam', [HasilAlamController::class, 'index'])->name('hasil-alam.public');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
