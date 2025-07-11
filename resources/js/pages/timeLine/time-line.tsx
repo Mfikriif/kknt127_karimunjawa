@@ -12,17 +12,17 @@ export default function TimeLine() {
         {
             nama: 'Dr. Trisnani Dwi H, S.Pi., M.Si.',
             image: 'imageassets/bunina.png',
-            fakultas: 'Fakultas Perikanan dan Kelautan',
+            fakultas: 'Fakultas Perikanan dan Ilmu Kelautan',
         },
         {
             nama: 'Tristiana Yuniarti, S.Pi., M.Si.',
             image: 'imageassets/buyuni.png',
-            fakultas: 'Fakultas Perikanan dan Kelautan',
+            fakultas: 'Fakultas Perikanan dan Ilmu Kelautan',
         },
         {
-            nama: 'Pranata Candra P.P,S.PI.,M.Ling',
+            nama: 'Pranata Candra P.P,S.Pi.,M.Ling',
             image: 'imageassets/Pranata.png',
-            fakultas: 'Fakultas Perikanan dan Kelautan',
+            fakultas: 'Fakultas Perikanan dan Ilmu Kelautan',
         },
     ];
 
@@ -95,7 +95,7 @@ export default function TimeLine() {
                 <div className="my-28">
                     <div className="relative z-10 mb-16 text-center">
                         <h1 className="mx-auto mb-5 max-w-3xl text-center text-2xl font-bold tracking-wider text-white sm:text-3xl lg:text-4xl">
-                            DOSEN PEMBIMBING<span className="text-[#64FFDA] drop-shadow-lg"> KKNT 127</span> DESA KEMUJAN KARMUNJAWA
+                            DOSEN PEMBIMBING<span className="text-[#64FFDA] drop-shadow-lg"> KKNT 127</span> DESA KEMUJAN KARIMUNJAWA
                         </h1>
                         <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-300">
                             Mari kita kenali dosen pembimbing yang telah berkontribusi dalam program KKNT Desa Kemujan Karimunjawa.
@@ -123,7 +123,7 @@ export default function TimeLine() {
             <section className="relative bg-[rgb(12,52,76)] px-4 py-16 sm:px-8 md:px-16 lg:px-24">
                 <div className="relative z-10 mb-16 text-center">
                     <h1 className="mx-auto mb-5 max-w-3xl text-center text-2xl font-bold tracking-wider text-white sm:text-3xl lg:text-4xl">
-                        Timeline<span className="text-[#64FFDA] drop-shadow-lg"> KKNT 127</span> DESA KEMUJAN KARMUNJAWA
+                        Timeline<span className="text-[#64FFDA] drop-shadow-lg"> KKNT 127</span> DESA KEMUJAN KARIMUNJAWA
                     </h1>
                     <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-300">
                         Mari lihat lebih dekat kegiatan apa saja yang dilakukan oleh mahasiswa kknt 127 di desa kemujan
