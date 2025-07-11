@@ -49,14 +49,14 @@ export default function NavLanding() {
                             Jenis-Jenis Rumput Laut
                         </a>
                     </li>
-                     <li>
+                    <li>
                         <a href="/hasil-alam" className="block hover:text-blue-400" onClick={toggleMenu}>
                             Hasil Sumber Daya Alam Desa Kemujan
                         </a>
                     </li>
                     <li>
                         <a href="/budidaya-rula" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Peta Lokasi Budidaya Rumput Laut
+                            Peta Lokasi Budidaya Rumput Laut dan Booklet
                         </a>
                     </li>
                 </ul>

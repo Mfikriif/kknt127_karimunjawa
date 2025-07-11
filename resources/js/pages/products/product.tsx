@@ -23,38 +23,22 @@ export default function LandingProducts({ products }: Props) {
             <NavLanding />
             <Head title="Produk Hasil Kemujan" />
             <section className="relative min-h-[100dvh] overflow-hidden bg-gradient-to-br from-[#0A2342] to-[#0E3A5A] px-4 py-16 text-white sm:px-8 md:px-16 lg:px-24">
-                <div className="pointer-events-none absolute inset-0 opacity-10">
-                    <svg
-                        className="absolute inset-0 h-full w-full object-cover"
-                        viewBox="0 0 1000 1000"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path d="M0 200C200 50 400 350 600 200C800 50 1000 200 1000 200V1000H0V200Z" fill="url(#patternGradient)" opacity="0.1" />
-                        <path d="M0 300C250 100 500 400 750 300C900 250 1000 300 1000 300V1000H0V300Z" fill="url(#patternGradient)" opacity="0.05" />
-                        <defs>
-                            <linearGradient id="patternGradient" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
-                                <stop stopColor="#3CB371" />
-                                <stop offset="1" stopColor="#3CB371" stopOpacity="0" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
+                <div className="my-28">
+                    <div className="relative z-10 mb-16 text-center">
+                        <h1 className="text-4xl leading-tight font-extrabold tracking-tight md:text-5xl">
+                            Produk <span className="text-[#64FFDA] drop-shadow-lg">Unggulan</span> Hasil Laut
+                        </h1>
+                        <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-300">
+                            Jelajahi kekayaan laut dari Desa Kemujan, Karimunjawa. Setiap produk mencerminkan cita rasa autentik dan potensi ekonomi
+                            lokal yang melimpah.
+                        </p>
+                    </div>
 
-                <div className="relative z-10 mb-16 text-center">
-                    <h1 className="text-4xl leading-tight font-extrabold tracking-tight md:text-5xl">
-                        Produk <span className="text-[#64FFDA] drop-shadow-lg">Unggulan</span> Hasil Laut
-                    </h1>
-                    <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-300">
-                        Jelajahi kekayaan laut dari Desa Kemujan, Karimunjawa. Setiap produk mencerminkan cita rasa autentik dan potensi ekonomi lokal
-                        yang melimpah.
-                    </p>
-                </div>
-
-                <div className="relative z-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {products.map((product) => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
+                    <div className="relative z-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        {products.map((product) => (
+                            <ProductCard key={product.id} product={product} />
+                        ))}
+                    </div>
                 </div>
             </section>
             <FooterLanding />
