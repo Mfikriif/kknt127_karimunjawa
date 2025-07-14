@@ -70,7 +70,7 @@ export default function EditSeaweedType({ seaweedType }: Props) {
     <div className="flex min-h-screen bg-white">
       <AdminSidebar />
 
-      <div className="ml-72 flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col">
         <AdminNavbar />
 
         <main className="flex-1 p-8 max-w-5xl mx-auto">

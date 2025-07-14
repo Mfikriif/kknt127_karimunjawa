@@ -6,7 +6,7 @@ export default function LandingSection2() {
     const items = [
         {
             title: 'TEMA',
-            text: 'Revitalisasi Budidaya Rumput Laut Kappaphycus sp. Integrasi Inovasiteknologi, Pemberdayaan Ekonomi Nelayan, dan Keberlanjutan Lingkungan di Desa Kemojan, Karimunjawa',
+            text: 'Revitalisasi Budidaya Rumput Laut KappaphycusSP. Integrasi Inovasiteknologi, Pemberdayaan Ekonomi Nelayan, dan Keberlanjutan Lingkungan di Desa Kemojan, Karimunjawa',
         },
         {
             title: 'TIM',

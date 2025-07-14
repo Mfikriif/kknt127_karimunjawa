@@ -28,11 +28,11 @@ export default function EditProduct({ product }: Props) {
   });
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [fileName, setFileName] = useState<string>(''); 
+  const [fileName, setFileName] = useState<string>(''); // nama file terpilih
 
   useEffect(() => {
     if (product.image) {
-      setPreviewImage(`/storage/${product.image}`); 
+      setPreviewImage(`/storage/${product.image}`); // Sesuaikan dengan path storage Laravel
     }
   }, [product.image]);
 
@@ -74,7 +74,7 @@ export default function EditProduct({ product }: Props) {
       <Head title="Edit Produk" />
       <div className="flex min-h-screen bg-gray-100">
         <AdminSidebar />
-        <div className="ml-72 flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col">
           <AdminNavbar />
           <main className="flex-1 p-6 md:p-10 overflow-auto bg-gray-100">
             <div className="max-w-3xl mx-auto">
@@ -107,11 +107,11 @@ export default function EditProduct({ product }: Props) {
                       onChange={e => setData('category', e.target.value)}
                       className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:ring-blue-500 focus:border-blue-500"
                     >
-                        <option value="">-- Pilih Kategori --</option>
-                        <option value="rumput_laut">Rumput Laut</option>
-                        <option value="ikan">Ikan</option>
-                        <option value="Mete">Mete</option>
-                        <option value="lainnya">Lainnya</option>
+                      <option value="">-- Pilih Kategori --</option>
+                      <option value="rumput_laut">Rumput Laut</option>
+                      <option value="ikan">Ikan</option>
+                      <option value="udang">Udang</option>
+                      <option value="lainnya">Lainnya</option>
                     </select>
                     {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
                   </div>

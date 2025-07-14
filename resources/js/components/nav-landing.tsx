@@ -28,20 +28,23 @@ export default function NavLanding() {
                 {/* Daftar menu dengan ukuran font responsif */}
                 <ul className="mt-28 space-y-6 px-6 text-xl font-semibold tracking-wider text-white sm:text-4xl md:text-4xl lg:text-4xl">
                     <li>
-                        {/* Menggunakan tag <a> standar sebagai pengganti Link */}
                         <a href="/" className="block hover:text-blue-400" onClick={toggleMenu}>
                             Home
                         </a>
                     </li>
                     <li>
-                        {/* Menggunakan tag <a> standar sebagai pengganti Link */}
                         <a href="/time-line" className="block hover:text-blue-400" onClick={toggleMenu}>
                             Time Line Kegiatan dan Dosen
                         </a>
                     </li>
                     <li>
                         <a href="/products" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Produk Olahan dari Desa Kemujan
+                            Hasil Sumber Daya Alam Desa Kemujan
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/umkm" className="block hover:text-blue-400" onClick={toggleMenu}>
+                            UMKM Olah Laut Kemujan
                         </a>
                     </li>
                     <li>
@@ -50,13 +53,18 @@ export default function NavLanding() {
                         </a>
                     </li>
                     <li>
-                        <a href="/hasil-alam" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Hasil Sumber Daya Alam Desa Kemujan
+                        <a href="/user/processing-methods" className="block hover:text-blue-400" onClick={toggleMenu}>
+                            Cara Pengolahan
                         </a>
                     </li>
                     <li>
-                        <a href="/budidaya-rula" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Peta Lokasi Budidaya Rumput Laut dan Booklet
+                        <a href="#services" className="block hover:text-blue-400" onClick={toggleMenu}>
+                            Services
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#contact" className="block hover:text-blue-400" onClick={toggleMenu}>
+                            Contact
                         </a>
                     </li>
                 </ul>

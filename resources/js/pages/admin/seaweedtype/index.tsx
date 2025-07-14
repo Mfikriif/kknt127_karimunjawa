@@ -43,7 +43,7 @@ export default function IndexSeaweedTypes({ seaweedTypes }: Props) {
   return (
     <div className="flex min-h-screen bg-gray-50 font-sans">
       <AdminSidebar />
-      <div className="ml-72 flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col">
         <AdminNavbar />
         <main className="flex-1 px-8 py-6 max-w-7xl mx-auto w-full">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Jenis Rumput Laut</h1>
