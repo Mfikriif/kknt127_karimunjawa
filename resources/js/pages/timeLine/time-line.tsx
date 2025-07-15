@@ -12,17 +12,17 @@ export default function TimeLine() {
         {
             nama: 'Dr. Trisnani Dwi H, S.Pi., M.Si.',
             image: 'imageassets/bunina.png',
-            fakultas: 'Fakultas Perikanan dan Kelautan',
+            fakultas: 'Fakultas Perikanan dan Ilmu Kelautan',
         },
         {
             nama: 'Tristiana Yuniarti, S.Pi., M.Si.',
             image: 'imageassets/buyuni.jpeg',
-            fakultas: 'Fakultas Perikanan dan Kelautan',
+            fakultas: 'Fakultas Perikanan dan Ilmu Kelautan',
         },
         {
             nama: 'Pranata Candra P.P,S.PI.,M.Ling',
             image: 'imageassets/Pranata.png',
-            fakultas: 'Fakultas Perikanan dan Kelautan',
+            fakultas: 'Fakultas Perikanan dan Ilmu Kelautan',
         },
     ];
 
@@ -70,9 +70,14 @@ export default function TimeLine() {
             <Head title="Timeline KKNT Desa Kemujan Karimunjawa" />
             <section className="relative min-h-[100dvh] bg-[rgb(12,52,76)] px-4 py-16 sm:px-8 md:px-16 lg:px-24">
                 <div className="my-28">
-                    <h1 className="mx-auto mb-14 max-w-3xl text-center text-2xl font-bold tracking-wider text-white sm:text-3xl lg:text-4xl">
-                        DOSEN PEMBIMBING KKNT DESA KEMUJAN KARIMUNJAWA
-                    </h1>
+                    <div className="relative z-10 mb-16 text-center">
+                        <h1 className="mx-auto mb-5 max-w-3xl text-center text-2xl font-bold tracking-wider text-white sm:text-3xl lg:text-4xl">
+                            DOSEN PEMBIMBING<span className="text-[#64FFDA] drop-shadow-lg"> KKNT 127</span> DESA KEMUJAN KARIMUNJAWA
+                        </h1>
+                        <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-300">
+                            Mari kita kenali dosen pembimbing yang telah berkontribusi dalam program KKNT Desa Kemujan Karimunjawa.
+                        </p>
+                    </div>
                     <div className="flex flex-row items-center justify-center">
                         <div className="mx-auto grid max-w-6xl grid-cols-1 justify-center gap-8 sm:grid-cols-2 md:grid-cols-2 md:gap-12 lg:grid-cols-3">
                             {dosenImage.map((dosen, index) => (
@@ -91,10 +96,15 @@ export default function TimeLine() {
                 </div>
             </section>
 
-            <section className="relative min-h-[100dvh] bg-[rgb(12,52,76)] px-4 py-16 sm:px-8 md:px-16 lg:px-24">
-                <h1 className="text-center text-white">
-                    <span className="text-2xl font-bold tracking-wider sm:text-3xl lg:text-4xl">Timeline KKNT Desa Kemujan Karimunjawa</span>
-                </h1>
+            <section className="relative bg-[rgb(12,52,76)] px-4 py-16 sm:px-8 md:px-16 lg:px-24">
+                <div className="relative z-10 mb-16 text-center">
+                    <h1 className="mx-auto mb-5 max-w-3xl text-center text-2xl font-bold tracking-wider text-white sm:text-3xl lg:text-4xl">
+                        Timeline<span className="text-[#64FFDA] drop-shadow-lg"> KKNT 127</span> DESA KEMUJAN KARIMUNJAWA
+                    </h1>
+                    <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-300">
+                        Mari lihat lebih dekat kegiatan apa saja yang dilakukan oleh mahasiswa kknt 127 di desa kemujan
+                    </p>
+                </div>
                 <div className="mt-8">
                     <div className="mx-auto max-w-4xl">
                         <div className="relative">
