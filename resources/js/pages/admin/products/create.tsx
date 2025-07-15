@@ -44,7 +44,7 @@ export default function CreateProduct() {
       <Head title="Tambah Produk" />
       <div className="flex min-h-screen bg-gray-100">
         <AdminSidebar />
-        <div className="ml-72 flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col">
           <AdminNavbar />
           <main className="flex-1 p-6 md:p-10 overflow-auto bg-gray-100">
             <div className="max-w-3xl mx-auto">

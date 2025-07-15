@@ -6,7 +6,8 @@ import { FaBoxOpen, FaLeaf, FaCogs, FaClock } from 'react-icons/fa';
 type DashboardProps = {
   totalProduk: number;
   jenisRumputLaut: number;
-  hasilAlam: number;
+  hasilALam: number;
+  metodePengolahan: number;
   aktivitas: {
     id: number;
     description: string;
@@ -15,7 +16,7 @@ type DashboardProps = {
 };
 
 export default function AdminDashboard(props: DashboardProps) {
-  const { totalProduk, jenisRumputLaut, hasilAlam, aktivitas } = props;
+  const { totalProduk, jenisRumputLaut, hasilALam, metodePengolahan, aktivitas } = props;
 
   const stats = [
     {
@@ -23,7 +24,7 @@ export default function AdminDashboard(props: DashboardProps) {
       value: totalProduk,
       icon: <FaBoxOpen className="text-blue-500 text-3xl" />,
       color: 'text-blue-600',
-      desc: 'Jumlah Postingan',
+      desc: 'Jumlah Postingan Produk',
     },
     {
       label: 'Jenis Rumput Laut',
@@ -32,12 +33,19 @@ export default function AdminDashboard(props: DashboardProps) {
       color: 'text-green-600',
       desc: 'Jumlah Postingan Rumput Laut',
     },
-        {
+    {
       label: 'Hasil Alam',
-      value: hasilAlam,
-      icon: <FaLeaf className="text-green-500 text-3xl" />,
-      color: 'text-green-600',
-      desc: 'Jumlah Postingan',
+      value: hasilALam,
+      icon: <FaBoxOpen className="text-yellow-500 text-3xl" />,
+      color: 'text-yellow-600',
+      desc: 'Jumlah Postingan Hasil Alam',
+    },
+    {
+      label: 'Metode Pengolahan',
+      value: metodePengolahan,
+      icon: <FaCogs className="text-purple-500 text-3xl" />,
+      color: 'text-purple-600',
+      desc: 'Jumlah Postingan Cara Pengolahan',
     },
   ];
 

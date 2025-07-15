@@ -22,7 +22,7 @@ export default function LandingProducts({ products }: Props) {
         <>
             <NavLanding />
             <Head title="Produk Hasil Kemujan" />
-            <section className="relative min-h-[100dvh] overflow-hidden bg-gradient-to-br from-[#0A2342] to-[#0E3A5A] px-4 py-16 text-white sm:px-8 md:px-16 lg:px-24">
+            <section className="relative min-h-[100dvh] bg-gradient-to-b from-[#0C344C] to-[#0f415e] px-4 py-16 text-white sm:px-8 md:px-16 lg:px-24">
                 <div className="my-28">
                     <div className="relative z-10 mb-16 text-center">
                         <h1 className="text-4xl leading-tight font-extrabold tracking-tight md:text-5xl">
