@@ -7,6 +7,7 @@ use App\Http\Controllers\SeaweedTypeController;
 use App\Http\Controllers\ProcessingMethodController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\HasilAlamController;
 use App\Http\Controllers\UmkmController;
 use App\Http\Controllers\Admin\UmkmController as AdminUmkmController;
 use Illuminate\Http\Request;
@@ -23,9 +24,18 @@ Route::get('/time-line', function () {
     return Inertia::render('timeLine/time-line');
 })->name('timeLine');
 
+Route::get('/budidaya-rula', function () {
+    return Inertia::render('petalokasi/budiDaya');
+})->name('budidayaRula');
+
 Route::get('/products', [ProductController::class, 'productIndex'])->name('products.index');
 Route::get('/seaweed-type', [SeaweedTypeController::class, 'userIndex'])->name('seaweed-type.public.index');
 Route::get('/user/processing-methods', [ProcessingMethodController::class, 'publicIndex'])->name('processing-methods.public.index');
+
+// ==========================================
+// HASIL ALAM ROUTES (PUBLIC)
+// ==========================================
+Route::get('/hasil-alam', [HasilAlamController::class, 'index'])->name('hasil-alam.public');
 
 // ==========================================
 // UMKM ROUTES (PUBLIC) - UPDATED
@@ -54,7 +64,7 @@ Route::get('/umkm/{umkm}', [UmkmController::class, 'show'])->name('umkm.show');
 Route::post('/umkm/contact', [UmkmController::class, 'store'])->name('umkm.contact.store');
 
 // ==========================================
-// API ROUTES untuk UMKM (BARU)
+// API ROUTES untuk UMKM (NEW)
 // ==========================================
 
 // API untuk mendapatkan UMKM berdasarkan kategori dengan limit
@@ -129,6 +139,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::delete('/{seaweedType}', [SeaweedTypeController::class, 'destroy'])->name('destroy');
     });
 
+    // Hasil Alam Management
+    Route::prefix('hasil-alam')->name('hasil-alam.')->group(function () {
+        Route::get('/', [HasilAlamController::class, 'index'])->name('index');
+        Route::get('/create', [HasilAlamController::class, 'create'])->name('create');
+        Route::post('/', [HasilAlamController::class, 'store'])->name('store');
+        Route::get('/{hasilAlam}', [HasilAlamController::class, 'show'])->name('show');
+        Route::get('/{hasilAlam}/edit', [HasilAlamController::class, 'edit'])->name('edit');
+        Route::put('/{hasilAlam}', [HasilAlamController::class, 'update'])->name('update');
+        Route::delete('/{hasilAlam}', [HasilAlamController::class, 'destroy'])->name('destroy');
+    });
+
     // Processing Methods Management
     Route::prefix('processing-methods')->name('processing-methods.')->group(function () {
         Route::get('/', [ProcessingMethodController::class, 'index'])->name('index');
@@ -140,7 +161,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::delete('/{processingMethod}', [ProcessingMethodController::class, 'destroy'])->name('destroy');
     });
 
-    // UMKM Management - HANYA SATU DEFINISI
+    // UMKM Management
     Route::prefix('umkm')->name('umkm.')->group(function () {
         Route::get('/', [AdminUmkmController::class, 'index'])->name('index');
         Route::get('/create', [AdminUmkmController::class, 'create'])->name('create');
@@ -150,17 +171,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::put('/{umkm}', [AdminUmkmController::class, 'update'])->name('update');
         Route::delete('/{umkm}', [AdminUmkmController::class, 'destroy'])->name('destroy');
         
-        // Custom actions for UMKM - HANYA toggle-active
+        // Custom actions for UMKM
         Route::post('/{umkm}/toggle-active', [AdminUmkmController::class, 'toggleActive'])->name('toggle-active');
     });
 
-    // ==========================================
-    // ADMIN ROUTES untuk UMKM Contact (BARU)
-    // ==========================================
-    
-    // Route untuk admin melihat pesan kontak
-    Route::get('/umkm/contacts', [UmkmController::class, 'getContactMessages'])->name('umkm.contacts');
-    Route::patch('/umkm/contacts/{contact}/read', [UmkmController::class, 'markContactAsRead'])->name('umkm.contacts.read');
+    // UMKM Contact Management - NEW FEATURE
+    Route::prefix('umkm-contacts')->name('umkm.contacts.')->group(function () {
+        Route::get('/', [UmkmController::class, 'getContactMessages'])->name('index');
+        Route::patch('/{contact}/read', [UmkmController::class, 'markContactAsRead'])->name('read');
+    });
 });
 
 // ==========================================

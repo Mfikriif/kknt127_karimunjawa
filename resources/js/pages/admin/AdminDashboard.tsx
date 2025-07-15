@@ -6,6 +6,7 @@ import { FaBoxOpen, FaLeaf, FaCogs, FaClock } from 'react-icons/fa';
 type DashboardProps = {
   totalProduk: number;
   jenisRumputLaut: number;
+  hasilALam: number;
   metodePengolahan: number;
   aktivitas: {
     id: number;
@@ -15,11 +16,11 @@ type DashboardProps = {
 };
 
 export default function AdminDashboard(props: DashboardProps) {
-  const { totalProduk, jenisRumputLaut, metodePengolahan, aktivitas } = props;
+  const { totalProduk, jenisRumputLaut, hasilALam, metodePengolahan, aktivitas } = props;
 
   const stats = [
     {
-      label: 'Total Produk',
+      label: 'Produk Olahan',
       value: totalProduk,
       icon: <FaBoxOpen className="text-blue-500 text-3xl" />,
       color: 'text-blue-600',
@@ -33,6 +34,13 @@ export default function AdminDashboard(props: DashboardProps) {
       desc: 'Jumlah Postingan Rumput Laut',
     },
     {
+      label: 'Hasil Alam',
+      value: hasilALam,
+      icon: <FaBoxOpen className="text-yellow-500 text-3xl" />,
+      color: 'text-yellow-600',
+      desc: 'Jumlah Postingan Hasil Alam',
+    },
+    {
       label: 'Metode Pengolahan',
       value: metodePengolahan,
       icon: <FaCogs className="text-purple-500 text-3xl" />,
@@ -44,7 +52,7 @@ export default function AdminDashboard(props: DashboardProps) {
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-100">
       <AdminSidebar />
-      <div className="flex flex-col flex-1">
+      <div className="ml-72 flex flex-col flex-1">
         <AdminNavbar />
         <main className="p-8">
           <h1 className="text-3xl font-bold text-slate-800 mb-8">Dashboard</h1>

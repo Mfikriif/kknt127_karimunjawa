@@ -40,12 +40,12 @@ export default function ProductIndex({ products }: Props) {
       <AdminSidebar />
 
       {/* Main */}
-      <div className="flex-1 flex flex-col">
+      <div className="ml-72 flex-1 flex flex-col">
         <AdminNavbar />
 
         <main className="flex-1 px-8 py-6 max-w-7xl mx-auto w-full">
           {/* Title */}
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Daftar Produk</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Produk Olahan dari Desa Kemujan</h1>
 
           {/* Filter section */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">

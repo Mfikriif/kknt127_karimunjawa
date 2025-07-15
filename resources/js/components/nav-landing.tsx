@@ -39,6 +39,11 @@ export default function NavLanding() {
                     </li>
                     <li>
                         <a href="/products" className="block hover:text-blue-400" onClick={toggleMenu}>
+                            Produk Olahan dari Desa Kemujan
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/hasil-alam" className="block hover:text-blue-400" onClick={toggleMenu}>
                             Hasil Sumber Daya Alam Desa Kemujan
                         </a>
                     </li>
@@ -58,13 +63,8 @@ export default function NavLanding() {
                         </a>
                     </li>
                     <li>
-                        <a href="#services" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Services
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#contact" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Contact
+                        <a href="/budidaya-rula" className="block hover:text-blue-400" onClick={toggleMenu}>
+                            Peta Lokasi Budidaya Rumput Laut dan Booklet
                         </a>
                     </li>
                 </ul>

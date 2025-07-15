@@ -89,8 +89,8 @@ export default function CreateProduct() {
                         <option value="">-- Pilih Kategori --</option>
                         <option value="rumput_laut">Rumput Laut</option>
                         <option value="ikan">Ikan</option>
-                        <option value="udang">Udang</option>
-                        <option value="kerang">Kerang</option>
+                        <option value="Mete">Mete</option>
+                        <option value="lainnya">Lainnya</option>
                       </select>
                       {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
                     </div>
