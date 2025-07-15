@@ -16,7 +16,7 @@ export default function TimeLine() {
         },
         {
             nama: 'Tristiana Yuniarti, S.Pi., M.Si.',
-            image: 'imageassets/buyuni.jpeg',
+            image: 'imageassets/buyuni.png',
             fakultas: 'Fakultas Perikanan dan Ilmu Kelautan',
         },
         {
