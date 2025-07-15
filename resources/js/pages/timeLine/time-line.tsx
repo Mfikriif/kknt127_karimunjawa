@@ -20,7 +20,7 @@ export default function TimeLine() {
             fakultas: 'Fakultas Perikanan dan Ilmu Kelautan',
         },
         {
-            nama: 'Pranata Candra P.P,S.PI.,M.Ling',
+            nama: 'Pranata Candra P.P,S.Pi.,M.Ling',
             image: 'imageassets/Pranata.png',
             fakultas: 'Fakultas Perikanan dan Ilmu Kelautan',
         },
