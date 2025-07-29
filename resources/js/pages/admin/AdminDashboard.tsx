@@ -45,7 +45,7 @@ export default function AdminDashboard(props: DashboardProps) {
             value: umkm,
             icon: <FaBoxOpen className="text-3xl text-yellow-500" />,
             color: 'text-yellow-600',
-            desc: 'Jumlah Postingan Hasil Alam',
+            desc: 'Jumlah Umkm Kemujan',
         },
     ];
 
