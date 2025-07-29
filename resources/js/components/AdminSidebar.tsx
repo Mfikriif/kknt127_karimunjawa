@@ -42,12 +42,6 @@ export default function AdminSidebar() {
             color: 'from-emerald-500 to-teal-500',
         },
         {
-            label: 'Cara Pengolahan',
-            icon: <FaCogs />,
-            href: '/admin/processing-methods',
-            color: 'from-purple-500 to-pink-500',
-        },
-        {
             label: 'UMKM',
             icon: <FaStore />,
             href: '/admin/umkm',

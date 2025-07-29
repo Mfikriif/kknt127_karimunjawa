@@ -11,7 +11,7 @@ interface Umkm {
     category: string;
     description: string;
     address: string;
-    products: string[];
+    products: string[] | null;
     contact: string;
     rating: number;
     image: string;
@@ -43,16 +43,26 @@ interface Props {
 }
 
 export default function EditUmkm({ umkm, categories, defaultOpeningHours }: Props) {
+        // PERBAIKAN: Helper function untuk validasi dan memformat products
+    const getSafeProducts = (products: string[] | null): string[] => {
+        if (!products) return [''];
+        if (!Array.isArray(products)) return [''];
+        const validProducts = products.filter(product => product && typeof product === 'string');
+        return validProducts.length > 0 ? validProducts : [''];
+    };
+
     const { data, setData, processing, errors, clearErrors } = useForm({
         name: umkm.name,
         owner: umkm.owner,
         category: umkm.category,
         description: umkm.description,
         address: umkm.address,
-        products: umkm.products,
+        products: getSafeProducts(umkm.products),
         contact: umkm.contact,
         rating: umkm.rating,
         image: umkm.image,
+        display_photos: umkm.display_photos || [],
+        menu_photo: umkm.menu_photo || null,
         price_range: umkm.price_range || '',
         instagram: umkm.instagram || '',
         facebook: umkm.facebook || '',
@@ -98,8 +108,9 @@ export default function EditUmkm({ umkm, categories, defaultOpeningHours }: Prop
         formData.append('facebook', data.facebook);
         formData.append('is_active', data.is_active ? '1' : '0');
         
-        // Add products
-        data.products.forEach((product, index) => {
+        // Add products - PERBAIKAN: Filter products yang valid
+        const validProducts = data.products.filter(product => product && product.trim() !== '');
+        validProducts.forEach((product, index) => {
             formData.append(`products[${index}]`, product);
         });
         
@@ -145,7 +156,7 @@ export default function EditUmkm({ umkm, categories, defaultOpeningHours }: Prop
 
     const removeProduct = (index: number) => {
         const newProducts = data.products.filter((_, i) => i !== index);
-        setData('products', newProducts);
+        setData('products', newProducts.length > 0 ? newProducts : ['']);
     };
 
     const updateProduct = (index: number, value: string) => {
@@ -467,27 +478,40 @@ export default function EditUmkm({ umkm, categories, defaultOpeningHours }: Prop
                             </div>
                             
                             <div className="space-y-3">
-                                {data.products.map((product, index) => (
-                                    <div key={index} className="flex items-center space-x-3">
+                                {data.products && data.products.length > 0 ? (
+                                    data.products.map((product, index) => (
+                                        <div key={index} className="flex items-center space-x-3">
+                                            <input
+                                                type="text"
+                                                value={product || ''}
+                                                onChange={(e) => updateProduct(index, e.target.value)}
+                                                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
+                                                placeholder={`Produk ${index + 1}`}
+                                                required
+                                            />
+                                            {data.products.length > 1 && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeProduct(index)}
+                                                    className="text-red-600 hover:text-red-700 p-1"
+                                                >
+                                                    <X className="w-4 h-4" />
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="flex items-center space-x-3">
                                         <input
                                             type="text"
-                                            value={product}
-                                            onChange={(e) => updateProduct(index, e.target.value)}
+                                            value=""
+                                            onChange={(e) => setData('products', [e.target.value])}
                                             className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900"
-                                            placeholder={`Produk ${index + 1}`}
+                                            placeholder="Produk 1"
                                             required
                                         />
-                                        {data.products.length > 1 && (
-                                            <button
-                                                type="button"
-                                                onClick={() => removeProduct(index)}
-                                                className="text-red-600 hover:text-red-700 p-1"
-                                            >
-                                                <X className="w-4 h-4" />
-                                            </button>
-                                        )}
                                     </div>
-                                ))}
+                                )}
                                 
                                 <button
                                     type="button"

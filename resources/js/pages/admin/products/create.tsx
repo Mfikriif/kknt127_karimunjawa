@@ -52,7 +52,7 @@ export default function CreateProduct() {
               <h1 className="text-3xl font-semibold text-gray-800 mb-6">Tambah Produk</h1>
 
               {/* Card form */}
-              <div className="bg-white p-8 rounded-2xl shadow-lg">
+              <div className="bg-white p-8 rounded-2xl shadow-lg text-black">
                 <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Nama Produk</label>

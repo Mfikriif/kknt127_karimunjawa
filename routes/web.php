@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SeaweedTypeController;
-use App\Http\Controllers\ProcessingMethodController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\HasilAlamController;
@@ -30,7 +29,6 @@ Route::get('/budidaya-rula', function () {
 
 Route::get('/products', [ProductController::class, 'productIndex'])->name('products.index');
 Route::get('/seaweed-type', [SeaweedTypeController::class, 'userIndex'])->name('seaweed-type.public.index');
-Route::get('/user/processing-methods', [ProcessingMethodController::class, 'publicIndex'])->name('processing-methods.public.index');
 
 // ==========================================
 // HASIL ALAM ROUTES (PUBLIC)
@@ -148,17 +146,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::get('/{hasilAlam}/edit', [HasilAlamController::class, 'edit'])->name('edit');
         Route::put('/{hasilAlam}', [HasilAlamController::class, 'update'])->name('update');
         Route::delete('/{hasilAlam}', [HasilAlamController::class, 'destroy'])->name('destroy');
-    });
-
-    // Processing Methods Management
-    Route::prefix('processing-methods')->name('processing-methods.')->group(function () {
-        Route::get('/', [ProcessingMethodController::class, 'index'])->name('index');
-        Route::get('/create', [ProcessingMethodController::class, 'create'])->name('create');
-        Route::post('/', [ProcessingMethodController::class, 'store'])->name('store');
-        Route::get('/{processingMethod}', [ProcessingMethodController::class, 'show'])->name('show');
-        Route::get('/{processingMethod}/edit', [ProcessingMethodController::class, 'edit'])->name('edit');
-        Route::put('/{processingMethod}', [ProcessingMethodController::class, 'update'])->name('update');
-        Route::delete('/{processingMethod}', [ProcessingMethodController::class, 'destroy'])->name('destroy');
     });
 
     // UMKM Management

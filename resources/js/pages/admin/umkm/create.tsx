@@ -32,11 +32,12 @@ export default function CreateUmkm({ categories, defaultOpeningHours }: Props) {
         instagram: '',
         facebook: '',
         opening_hours: defaultOpeningHours,
-        is_active: true,
+        is_active: Boolean(true),
     });
 
     const [displayPhotosPreviews, setDisplayPhotosPreviews] = useState<string[]>([]);
     const [menuPhotoPreview, setMenuPhotoPreview] = useState<string | null>(null);
+
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -76,8 +77,7 @@ export default function CreateUmkm({ categories, defaultOpeningHours }: Props) {
         }
         
         post(route('admin.umkm.store'), {
-            data: formData,
-            forceFormData: true,
+             forceFormData: true
         });
     };
 

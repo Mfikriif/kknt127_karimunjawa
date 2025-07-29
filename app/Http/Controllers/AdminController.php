@@ -22,7 +22,6 @@ class AdminController extends Controller
         return Inertia::render('admin/AdminDashboard', [
             'totalProduk' => Product::count(),
             'jenisRumputLaut' => SeaweedType::count(),
-            'metodePengolahan' => ProcessingMethod::count(),
             'aktivitas' => AdminActivity::latest()->take(10)->get(),
         ]);
     }

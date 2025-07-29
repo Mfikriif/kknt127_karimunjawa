@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\SeaweedType; 
 use App\Models\HasilAlam;
-use App\Models\ProcessingMethod;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -18,7 +17,6 @@ class AdminDashboardController extends Controller
             'totalProduk' => Product::count(),
             'jenisRumputLaut' => SeaweedType::count(),
             'hasilAlam' => HasilAlam::count(),
-            'metodePengolahan' => ProcessingMethod::count(),
             'aktivitas' => DB::table('admin_activities')
                 ->orderBy('created_at', 'desc')
                 ->take(5)

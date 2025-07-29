@@ -27,7 +27,7 @@ interface Umkm {
     category: string;
     description: string;
     address: string;
-    products: string[];
+    products: string[] | null;
     contact: string;
     rating: number;
     image: string;
@@ -85,6 +85,14 @@ interface Props {
 export default function UmkmIndex({ umkms, categories, filters, stats }: Props) {
     const [search, setSearch] = useState(filters.search || '');
     const [showFilters, setShowFilters] = useState(false);
+
+    
+    // PERBAIKAN: Helper function untuk validasi dan memformat products
+    const getSafeProducts = (umkm: Umkm): string[] => {
+        if (!umkm.products) return [];
+        if (!Array.isArray(umkm.products)) return [];
+        return umkm.products.filter(product => product && typeof product === 'string');
+    };
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -223,7 +231,7 @@ export default function UmkmIndex({ umkms, categories, filters, stats }: Props) 
             <AdminSidebar />
             
             {/* Main Content */}
-            <div className="flex-1 flex flex-col">
+                <div className="ml-72 flex-1 flex flex-col">
                 {/* Navbar */}
                 <AdminNavbar />
                 
@@ -365,6 +373,7 @@ export default function UmkmIndex({ umkms, categories, filters, stats }: Props) 
                         {umkms.data.map((umkm) => {
                             const openingHoursDisplay = formatOpeningHoursDisplay(umkm);
                             const displayImage = getDisplayImage(umkm);
+                            const safeProducts = getSafeProducts(umkm); // PERBAIKAN: Gunakan helper function
                             
                             return (
                                 <div key={umkm.id} className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 overflow-hidden">
@@ -450,15 +459,21 @@ export default function UmkmIndex({ umkms, categories, filters, stats }: Props) 
                                         <div className="mb-4">
                                             <p className="text-sm font-medium text-gray-900 mb-2">Produk:</p>
                                             <div className="flex flex-wrap gap-1">
-                                                {umkm.products.slice(0, 3).map((product, idx) => (
-                                                    <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-md">
-                                                        {product}
-                                                    </span>
-                                                ))}
-                                                {umkm.products.length > 3 && (
-                                                    <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-md">
-                                                        +{umkm.products.length - 3} lainnya
-                                                    </span>
+                                                {safeProducts.length > 0 ? (
+                                                    <>
+                                                        {safeProducts.slice(0, 3).map((product, idx) => (
+                                                            <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-md">
+                                                                {product}
+                                                            </span>
+                                                        ))}
+                                                        {safeProducts.length > 3 && (
+                                                            <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-md">
+                                                                +{safeProducts.length - 3} lainnya
+                                                            </span>
+                                                        )}
+                                                    </>
+                                                ) : (
+                                                    <span className="text-xs text-gray-500 italic">Tidak ada produk tersedia</span>
                                                 )}
                                             </div>
                                         </div>
