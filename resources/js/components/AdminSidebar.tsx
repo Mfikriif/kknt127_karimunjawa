@@ -5,6 +5,7 @@ import {
     FaBoxOpen,
     FaLeaf,
     FaCogs,
+    FaStore,
     FaSignOutAlt,
 } from 'react-icons/fa';
 
@@ -40,6 +41,12 @@ export default function AdminSidebar() {
             href: '/admin/hasil-alam',
             color: 'from-emerald-500 to-teal-500',
         },
+        {
+            label: 'UMKM',
+            icon: <FaStore />,
+            href: '/admin/umkm',
+            color: 'from-orange-500 to-red-500',
+        },
     ];
 
     return (
@@ -71,9 +78,12 @@ export default function AdminSidebar() {
                                         : 'hover:bg-white/5'
                                 }`}
                             >
+                                {/* Active indicator - left border */}
                                 {isActive && (
                                     <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-blue-400 to-purple-400 rounded-r-full"></div>
                                 )}
+                                
+                                {/* Icon with gradient background */}
                                 <div
                                     className={`w-10 h-10 bg-gradient-to-br ${item.color} rounded-lg flex items-center justify-center shadow-md transition-all duration-200 ${
                                         isActive ? 'scale-105' : 'group-hover:scale-105'
@@ -81,6 +91,8 @@ export default function AdminSidebar() {
                                 >
                                     {item.icon}
                                 </div>
+                                
+                                {/* Label */}
                                 <span
                                     className={`font-medium ${
                                         isActive
@@ -94,13 +106,14 @@ export default function AdminSidebar() {
                         );
                     })}
                 </nav>
-
+            
+                {/* Logout Button */}
                 <div className="mt-12 pt-6 border-t border-white/10">
                     <button
                         onClick={handleLogout}
                         className="group w-full flex items-center gap-4 px-4 py-3 rounded-xl text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all duration-200 hover:translate-x-1"
                     >
-                        <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center shadow-md transition-all duration-200">
+                        <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center shadow-md transition-all duration-200 group-hover:scale-105">
                             <FaSignOutAlt className="text-lg" />
                         </div>
                         <span className="font-medium">Logout</span>

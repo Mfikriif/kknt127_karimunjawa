@@ -5,7 +5,9 @@ import { FaBoxOpen, FaClock, FaLeaf } from 'react-icons/fa';
 type DashboardProps = {
     totalProduk: number;
     jenisRumputLaut: number;
-    hasilAlam: number;
+    hasilALam: number;
+    umkm: number;
+
     aktivitas: {
         id: number;
         description: string;
@@ -14,7 +16,7 @@ type DashboardProps = {
 };
 
 export default function AdminDashboard(props: DashboardProps) {
-    const { totalProduk, jenisRumputLaut, hasilAlam, aktivitas } = props;
+    const { totalProduk, jenisRumputLaut, hasilALam, umkm, aktivitas } = props;
 
     const stats = [
         {
@@ -33,10 +35,17 @@ export default function AdminDashboard(props: DashboardProps) {
         },
         {
             label: 'Hasil Alam',
-            value: hasilAlam,
-            icon: <FaLeaf className="text-3xl text-green-500" />,
-            color: 'text-green-600',
-            desc: 'Jumlah Postingan',
+            value: hasilALam,
+            icon: <FaBoxOpen className="text-3xl text-yellow-500" />,
+            color: 'text-yellow-600',
+            desc: 'Jumlah Postingan Hasil Alam',
+        },
+        {
+            label: 'UMKM',
+            value: umkm,
+            icon: <FaBoxOpen className="text-3xl text-yellow-500" />,
+            color: 'text-yellow-600',
+            desc: 'Jumlah Postingan Hasil Alam',
         },
     ];
 
