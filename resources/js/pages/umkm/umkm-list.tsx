@@ -138,8 +138,6 @@ export default function UmkmListPage({
     
     // Hook untuk screen size
     const { width } = useScreenSize();
-    const isMobile = width <= 430;
-    const isVerySmallMobile = width <= 380;
     const isTabletOrMobile = width <= 1024;
     const isTablet = width <= 768;
 
@@ -222,7 +220,7 @@ export default function UmkmListPage({
         }, 200); // Delay untuk memastikan component sudah stabil
 
         return () => clearTimeout(initTimeout);
-    }, []); // Empty dependency - hanya run sekali
+    }, [getCorrectPerPage, width, selectedCategory, searchTerm]); // Added missing dependencies
 
     // Safety checks for data
     const safeUmkms = useMemo(() => {
@@ -239,7 +237,7 @@ export default function UmkmListPage({
             links: [] 
         };
         return result;
-    }, [umkms, currentPerPage, width, getCorrectPerPage]);
+    }, [umkms, currentPerPage]);
 
     const safeCategories = useMemo(() => categories || [], [categories]);
     const safeFilters = useMemo(() => filters || {}, [filters]);

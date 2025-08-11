@@ -130,8 +130,21 @@ const programMonodisiplinData = [
     }
 ];
 
+type ProgramData = {
+    nama: string;
+    prodi: string;
+    fakultas: string;
+    kegiatan: string;
+    deskripsi: string;
+    icon: React.ReactNode;
+    kategori: string;
+    tanggal: string;
+    techStack: string[];
+    outcomes: string[];
+};
+
 type ProgramCardProps = {
-    program: any;
+    program: ProgramData;
     index: number;
 };
 
@@ -270,7 +283,7 @@ function ProgramCard({ program, index }: ProgramCardProps) {
                             <div>
                                 <h5 className="font-semibold text-gray-900 mb-3">Outcome & Deliverables</h5>
                                 <div className="space-y-2">
-                                    {program.outcomes.map((outcome: string, idx: number) => (
+                                    {program.outcomes.map((outcome, idx) => (
                                         <div key={idx} className="flex items-center gap-2">
                                             <div className="w-2 h-2 rounded-full" style={{ backgroundColor: theme.accent }}></div>
                                             <span className="text-sm text-gray-600">{outcome}</span>
