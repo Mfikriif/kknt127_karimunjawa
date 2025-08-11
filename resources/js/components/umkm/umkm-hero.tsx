@@ -7,7 +7,6 @@ interface Stats {
     total_umkm: number;
     total_products: number;
     total_categories: number;
-    revenue_increase: number;
 }
 
 interface Props {
@@ -35,8 +34,7 @@ export default function UmkmHero({ stats }: Props) {
     const defaultStats = {
         total_umkm: 150,
         total_products: 25,
-        total_categories: 6,
-        revenue_increase: 45
+        total_categories: 6
     };
 
     const displayStats = stats || defaultStats;

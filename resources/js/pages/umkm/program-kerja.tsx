@@ -130,8 +130,12 @@ const programMonodisiplinData = [
     }
 ];
 
-// Component untuk Program Card yang dapat di-expand
-function ProgramCard({ program, index }) {
+type ProgramCardProps = {
+    program: any;
+    index: number;
+};
+
+function ProgramCard({ program, index }: ProgramCardProps) {
     const [isExpanded, setIsExpanded] = useState(false);
     
     const colorThemes = [
@@ -158,8 +162,8 @@ function ProgramCard({ program, index }) {
     const theme = colorThemes[index % 3];
     
     // Background images untuk setiap mahasiswa 
-    const getBackgroundImage = (nama) => {
-        const imageMap = {
+    const getBackgroundImage = (nama: string) => {
+        const imageMap: Record<string, string> = {
             "RADITYA WISNU CAHYO NUGROHO": "/imageassets/fase4buktiprokerwisnu.png",
             "PRAMESTY SANGGITA CAHYANI": "/imageassets/fase4buktiprokerpramesty.jpg", 
             "LEILA VITA RASENDRIYA": "/imageassets/fase4buktiprokerleila.png",
@@ -213,7 +217,7 @@ function ProgramCard({ program, index }) {
                 <div className={`${index % 2 === 0 ? 'order-2' : 'order-1'} p-8`}>
                     <div className="flex items-center gap-3 mb-6">
                         <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${theme.gradient} flex items-center justify-center text-white font-bold`}>
-                            {program.nama.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                            {program.nama.split(' ').map((n: string) => n[0]).join('').slice(0, 2)}
                         </div>
                         <div>
                             <h4 className="font-bold text-gray-900">{program.nama}</h4>
@@ -251,7 +255,7 @@ function ProgramCard({ program, index }) {
                             <div>
                                 <h5 className="font-semibold text-gray-900 mb-3">Tech Stack & Tools</h5>
                                 <div className="flex flex-wrap gap-2">
-                                    {program.techStack.map((tech, idx) => (
+                                    {program.techStack.map((tech: string, idx: number) => (
                                         <span 
                                             key={idx} 
                                             className={`text-xs px-3 py-1 rounded-full ${theme.light}`}
@@ -266,7 +270,7 @@ function ProgramCard({ program, index }) {
                             <div>
                                 <h5 className="font-semibold text-gray-900 mb-3">Outcome & Deliverables</h5>
                                 <div className="space-y-2">
-                                    {program.outcomes.map((outcome, idx) => (
+                                    {program.outcomes.map((outcome: string, idx: number) => (
                                         <div key={idx} className="flex items-center gap-2">
                                             <div className="w-2 h-2 rounded-full" style={{ backgroundColor: theme.accent }}></div>
                                             <span className="text-sm text-gray-600">{outcome}</span>

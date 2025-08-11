@@ -86,8 +86,10 @@ export default function UmkmContact() {
                                             className="w-full h-full object-cover"
                                             onError={(e) => {
                                                 // Fallback jika image tidak ditemukan
-                                                e.target.style.display = 'none';
-                                                e.target.nextSibling.style.display = 'flex';
+                                                (e.target as HTMLImageElement).style.display = 'none';
+                                                if ((e.target as HTMLImageElement).nextSibling instanceof HTMLElement) {
+                                                    ((e.target as HTMLImageElement).nextSibling as HTMLElement).style.display = 'flex';
+                                                }
                                             }}
                                         />    
                                     </div>
@@ -130,8 +132,10 @@ export default function UmkmContact() {
                                                 className="w-full h-full object-cover"
                                                 onError={(e) => {
                                                     // Fallback jika image tidak ditemukan
-                                                    e.target.style.display = 'none';
-                                                    e.target.nextSibling.style.display = 'flex';
+                                                    (e.target as HTMLImageElement).style.display = 'none';
+                                                    if ((e.target as HTMLImageElement).nextSibling instanceof HTMLElement) {
+                                                        ((e.target as HTMLImageElement).nextSibling as HTMLElement).style.display = 'flex';
+                                                    }
                                                 }}
                                             />       
                                         </div>
@@ -172,9 +176,11 @@ export default function UmkmContact() {
                                                 className="w-full h-full object-cover"
                                                 onError={(e) => {
                                                     // Fallback jika image tidak ditemukan
-                                                    e.target.style.display = 'none';
-                                                    e.target.nextSibling.style.display = 'flex';
-                                                }}
+                                                    (e.target as HTMLImageElement).style.display = 'none';
+                                                    if ((e.target as HTMLImageElement).nextSibling instanceof HTMLElement) {
+                                                        ((e.target as HTMLImageElement).nextSibling as HTMLElement).style.display = 'flex';
+                                                    }
+                                                }}    
                                             />    
                                         </div>
                                             
@@ -217,9 +223,11 @@ export default function UmkmContact() {
                                                 className="w-full h-full object-cover"
                                                 onError={(e) => {
                                                     // Fallback jika image tidak ditemukan
-                                                    e.target.style.display = 'none';
-                                                    e.target.nextSibling.style.display = 'flex';
-                                                }}
+                                                    (e.target as HTMLImageElement).style.display = 'none';
+                                                    if ((e.target as HTMLImageElement).nextSibling instanceof HTMLElement) {
+                                                        ((e.target as HTMLImageElement).nextSibling as HTMLElement).style.display = 'flex';
+                                                    }
+                                                }}  
                                             />        
                                         </div>
                                         
@@ -259,9 +267,11 @@ export default function UmkmContact() {
                                                 className="w-full h-full object-cover"
                                                 onError={(e) => {
                                                     // Fallback jika image tidak ditemukan
-                                                    e.target.style.display = 'none';
-                                                    e.target.nextSibling.style.display = 'flex';
-                                                }}
+                                                    (e.target as HTMLImageElement).style.display = 'none';
+                                                    if ((e.target as HTMLImageElement).nextSibling instanceof HTMLElement) {
+                                                        ((e.target as HTMLImageElement).nextSibling as HTMLElement).style.display = 'flex';
+                                                    }
+                                                }}  
                                             />                                                   
                                         </div>
 
@@ -301,9 +311,11 @@ export default function UmkmContact() {
                                                 className="w-full h-full object-cover"
                                                 onError={(e) => {
                                                     // Fallback jika image tidak ditemukan
-                                                    e.target.style.display = 'none';
-                                                    e.target.nextSibling.style.display = 'flex';
-                                                }}
+                                                    (e.target as HTMLImageElement).style.display = 'none';
+                                                    if ((e.target as HTMLImageElement).nextSibling instanceof HTMLElement) {
+                                                        ((e.target as HTMLImageElement).nextSibling as HTMLElement).style.display = 'flex';
+                                                    }
+                                                }}  
                                             />
                                         </div>
                                             

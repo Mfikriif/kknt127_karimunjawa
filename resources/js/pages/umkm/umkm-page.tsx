@@ -11,8 +11,7 @@ import ScrollToTopButton from '@/components/ui/ScrollToTopButton';
 interface Stats {
     total_umkm: number;
     total_products: number;
-    certified_halal: number;
-    revenue_increase: number;
+    total_categories: number;
 }
 
 // Interface untuk featured products
