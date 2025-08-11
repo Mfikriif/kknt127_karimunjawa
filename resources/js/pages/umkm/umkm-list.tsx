@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import UmkmNavbar from '@/components/umkm/UmkmNavbar';
 import UmkmFooter from '@/components/umkm/umkm-footer';
@@ -45,13 +45,11 @@ interface Umkm {
     created_at: string;
 }
 
-// Interface untuk category stats
 interface CategoryStat {
     name: string;
     count: number;
 }
 
-// Interface untuk stats
 interface Stats {
     total_umkm: number;
     total_products: number;
@@ -63,6 +61,7 @@ interface PaginationMeta {
     from: number;
     to: number;
     total: number;
+    per_page: number;
 }
 
 interface PaginationLink {
@@ -86,7 +85,38 @@ interface Props {
     current_category?: string;
     search_query?: string;
     stats?: Stats;
+    per_page?: number;
 }
+
+// Hook untuk mendeteksi ukuran layar dengan debounce
+const useScreenSize = () => {
+    const [screenSize, setScreenSize] = useState({
+        width: typeof window !== 'undefined' ? window.innerWidth : 1024,
+        height: typeof window !== 'undefined' ? window.innerHeight : 768,
+    });
+
+    useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
+        
+        const handleResize = () => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                setScreenSize({
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                });
+            }, 100); // Debounce 100ms untuk performa
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            clearTimeout(timeoutId);
+        };
+    }, []);
+
+    return screenSize;
+};
 
 export default function UmkmListPage({ 
     umkms, 
@@ -95,33 +125,131 @@ export default function UmkmListPage({
     currentCategory, 
     current_category, 
     search_query,
-    stats 
+    stats,
+    per_page 
 }: Props) {
-    // Use both currentCategory and current_category for backward compatibility
     const activeCategory = currentCategory || current_category || 'Semua';
     const activeSearchQuery = search_query || filters?.search || '';
     
     const [searchTerm, setSearchTerm] = useState(activeSearchQuery);
     const [selectedCategory, setSelectedCategory] = useState(activeCategory);
+    const [isLoading, setIsLoading] = useState(false);
+    const [hasInitialized, setHasInitialized] = useState(false);
+    
+    // Hook untuk screen size
+    const { width } = useScreenSize();
+    const isMobile = width <= 430;
+    const isVerySmallMobile = width <= 380;
+    const isTabletOrMobile = width <= 1024;
+    const isTablet = width <= 768;
+
+    // Ref untuk pagination container
+    const paginationRef = useRef<HTMLDivElement>(null);
+    
+    // PERBAIKAN: Fungsi untuk mendapatkan per_page yang tepat berdasarkan width
+    const getCorrectPerPage = useCallback((screenWidth: number) => {
+        return screenWidth <= 1024 ? 6 : 12;
+    }, []);
+
+    // PERBAIKAN: State untuk current per_page dengan nilai yang benar
+    const [currentPerPage, setCurrentPerPage] = useState(() => {
+        if (per_page) {
+            return per_page;
+        }
+        return getCorrectPerPage(width);
+    });
+
+    // PERBAIKAN: Effect untuk auto-adjustment per_page ketika layar berubah
+    useEffect(() => {
+        if (!hasInitialized) return;
+
+        const correctPerPage = getCorrectPerPage(width);
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentUrlPerPage = parseInt(urlParams.get('per_page') || '12');
+        
+        // PERBAIKAN: Hanya update jika benar-benar berbeda dan sudah initialized
+        if (correctPerPage !== currentUrlPerPage && correctPerPage !== currentPerPage) {
+            
+            setCurrentPerPage(correctPerPage);
+            setIsLoading(true);
+            
+            router.get('/umkm/list-umkm', {
+                category: selectedCategory,
+                search: searchTerm,
+                per_page: correctPerPage,
+            }, {
+                preserveState: true,
+                preserveScroll: true,
+                only: ['umkms'],
+                onSuccess: () => {
+                    setIsLoading(false);
+                },
+                onError: () => {
+                    setIsLoading(false);
+                }
+            });
+        }
+    }, [width, hasInitialized, selectedCategory, searchTerm, currentPerPage, getCorrectPerPage]);
+
+    // PERBAIKAN: Effect untuk initial setup - hanya run sekali
+    useEffect(() => {
+        const correctPerPage = getCorrectPerPage(width);
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentUrlPerPage = parseInt(urlParams.get('per_page') || '12');
+        
+        // Set initialized flag setelah component mount
+        const initTimeout = setTimeout(() => {
+            setHasInitialized(true);
+            
+            // PERBAIKAN: Jika per_page di URL tidak sesuai dengan screen size, perbaiki
+            if (currentUrlPerPage !== correctPerPage) {
+                
+                setCurrentPerPage(correctPerPage);
+                
+                router.get('/umkm/list-umkm', {
+                    category: selectedCategory,
+                    search: searchTerm,
+                    per_page: correctPerPage,
+                }, {
+                    preserveState: true,
+                    preserveScroll: true,
+                    only: ['umkms'],
+                    replace: true // Replace untuk initial correction
+                });
+            } else {
+                setCurrentPerPage(currentUrlPerPage);
+            }
+        }, 200); // Delay untuk memastikan component sudah stabil
+
+        return () => clearTimeout(initTimeout);
+    }, []); // Empty dependency - hanya run sekali
 
     // Safety checks for data
-    const safeUmkms = useMemo(() => 
-        umkms || { data: [], meta: { current_page: 1, last_page: 1, from: 0, to: 0, total: 0 }, links: [] }, 
-        [umkms]
-    );
+    const safeUmkms = useMemo(() => {
+        const result = umkms || { 
+            data: [], 
+            meta: { 
+                current_page: 1, 
+                last_page: 1, 
+                from: 0, 
+                to: 0, 
+                total: 0,
+                per_page: currentPerPage
+            }, 
+            links: [] 
+        };
+        return result;
+    }, [umkms, currentPerPage, width, getCorrectPerPage]);
 
     const safeCategories = useMemo(() => categories || [], [categories]);
-
     const safeFilters = useMemo(() => filters || {}, [filters]);
-
     const safeStats = useMemo(() => stats || {
         total_umkm: safeUmkms.data.length,
         total_products: 0,
     }, [stats, safeUmkms]);
 
-    // PERBAIKAN: Helper function untuk mendapatkan display image - ICON HANYA SEBAGAI FALLBACK
+    // Helper functions
     const getDisplayImage = (umkm: Umkm) => {
-        // PRIORITAS 1: Display photos
         if (umkm.display_photos && umkm.display_photos.length > 0) {
             return {
                 type: 'photo',
@@ -130,7 +258,6 @@ export default function UmkmListPage({
             };
         }
         
-        // PRIORITAS 2: Menu photo
         if (umkm.menu_photo) {
             return {
                 type: 'photo',
@@ -139,7 +266,6 @@ export default function UmkmListPage({
             };
         }
         
-        // PRIORITAS 3: Icon emoji HANYA sebagai fallback
         return {
             type: 'emoji',
             src: umkm.image || '🏪',
@@ -147,7 +273,6 @@ export default function UmkmListPage({
         };
     };
 
-    // Helper function untuk mendapatkan jam buka hari ini
     const getTodayOpeningHours = (umkm: Umkm) => {
         if (!umkm.opening_hours) return '08:00-17:00';
         
@@ -174,9 +299,11 @@ export default function UmkmListPage({
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
+        
         router.get('/umkm/list-umkm', {
             category: selectedCategory,
             search: searchTerm,
+            per_page: currentPerPage,
         }, {
             preserveState: true,
             preserveScroll: true
@@ -185,9 +312,11 @@ export default function UmkmListPage({
 
     const handleCategoryFilter = (categoryName: string) => {
         setSelectedCategory(categoryName);
+        
         router.get('/umkm/list-umkm', {
             category: categoryName,
             search: searchTerm,
+            per_page: currentPerPage,
         }, {
             preserveState: true,
             preserveScroll: true
@@ -196,7 +325,30 @@ export default function UmkmListPage({
 
     const handlePageChange = (url: string) => {
         if (url) {
-            router.get(url);
+            
+            const currentScrollY = window.scrollY;
+            setIsLoading(true);
+            
+            const urlObj = new URL(url, window.location.origin);
+            const params = new URLSearchParams(urlObj.search);
+            
+            // PERBAIKAN: Pastikan per_page selalu sesuai dengan screen size
+            params.set('per_page', currentPerPage.toString());
+            
+            const newUrl = `${urlObj.pathname}?${params.toString()}`;
+            
+            router.get(newUrl, {}, {
+                preserveState: true,
+                preserveScroll: true,
+                only: ['umkms'],
+                onSuccess: () => {
+                    setIsLoading(false);
+                },
+                onError: () => {
+                    setIsLoading(false);
+                    window.scrollTo(0, currentScrollY);
+                }
+            });
         }
     };
 
@@ -219,13 +371,12 @@ export default function UmkmListPage({
         <>
             <Head title={`UMKM ${selectedCategory === 'Semua' ? 'Semua Kategori' : selectedCategory} - Desa Kemujan`} />
             
-            {/* Updated Navbar Component with activeMenu */}
             <UmkmNavbar activeMenu="umkm-unggulan" />
 
             {/* Main Container */}
             <div className="min-h-screen bg-[rgb(12,52,76)] pt-4">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    {/* Section Header - Ocean Theme */}
+                    {/* Section Header */}
                     <div className="text-center mb-12 pt-16">
                         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                             UMKM Unggulan Desa Kemujan, Karimun Jawa
@@ -237,7 +388,7 @@ export default function UmkmListPage({
                         </p>
                     </div>
 
-                    {/* Statistics Row - Ocean Theme */}
+                    {/* Statistics Row */}
                     <div className="items-center justify-center grid grid-cols-2 md:grid-cols-2 gap-6 mb-12">
                         <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 text-center shadow-lg ">
                             <div className="w-12 h-12 bg-[#64FFDA]/20 rounded-lg flex items-center justify-center mx-auto mb-3">
@@ -256,10 +407,9 @@ export default function UmkmListPage({
                         </div>
                     </div>
 
-                    {/* Search Section - Ocean Theme */}
+                    {/* Search Section */}
                     <div className="bg-white/10 backdrop-blur-md rounded-xl shadow-lg p-6 mb-8 ">
                         <div className="flex flex-col lg:flex-row gap-6">
-                            {/* Search Bar */}
                             <div className="flex-1">
                                 <form onSubmit={handleSearch} className="flex gap-2">
                                     <div className="relative flex-1">
@@ -277,21 +427,19 @@ export default function UmkmListPage({
                                         className="bg-[#64FFDA] text-[rgb(12,52,76)] px-6 py-3 rounded-lg transition-all duration-300 flex items-center gap-2 font-semibold hover:scale-105"
                                     >
                                         <Search size={20} />
-                                        Cari
+                                        <span className={`${isTablet ? 'hidden' : 'block'}`}>Cari</span>
                                     </button>
                                 </form>
                             </div>
                         </div>
                     </div>
 
-                    {/* Category Filter - Ocean Theme */}
+                    {/* Category Filter */}
                     {allCategories && allCategories.length > 1 && (
                         <div className="mb-2">
-                        {/* Container dengan padding untuk shadow */}
                             <div className="px-4 py-3">
-                                {/* Scroll container */}
                                 <div className="overflow-x-auto scrollbar-hide">
-                                    <div className="flex justify-center gap-4 min-w-max mx-auto w-fit mt-4 mb-8 px-2">
+                                    <div className="flex justify-center gap-4 min-w-max mx-auto w-fit mt-4 mb-12 px-2">
                                         {allCategories.map((category) => (
                                             <button
                                                 key={category.name}
@@ -316,7 +464,6 @@ export default function UmkmListPage({
                                 </div>
                             </div>
                             
-                            {/* Scroll indicator for mobile */}
                             <div className="md:hidden text-center mt-4">
                                 <p className="text-xs text-white/60">← Geser untuk melihat kategori lainnya →</p>
                             </div>
@@ -332,7 +479,7 @@ export default function UmkmListPage({
                         </p>
                     </div>
 
-                    {/* UMKM Grid - Ocean Theme Glassmorphism Cards */}
+                    {/* UMKM Grid */}
                     {safeUmkms.data.length > 0 ? (
                         <>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
@@ -369,14 +516,12 @@ export default function UmkmListPage({
                                                     </div>
                                                 )}
                                                 
-                                                {/* Status Badge */}
                                                 <div className="absolute top-3 left-3">
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
                                                         Aktif
                                                     </span>
                                                 </div>
                                                 
-                                                {/* Operating Hours */}
                                                 <div className="absolute top-3 right-3">
                                                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-gray-800 bg-white/90 text-gray-800 backdrop-blur-sm border border-gray-200">
                                                         <Clock className="w-3 h-3 mr-1" />
@@ -387,7 +532,6 @@ export default function UmkmListPage({
 
                                             {/* Card Content */}
                                             <div className="p-6 flex-grow flex flex-col">
-                                                {/* Header */}
                                                 <div className="flex items-start justify-between mb-4">
                                                     <div className="min-w-0 flex-1">
                                                         <h3 className="font-bold text-white text-lg truncate group-hover:text-[#64FFDA] transition-colors">
@@ -401,27 +545,23 @@ export default function UmkmListPage({
                                                     </div>
                                                 </div>
 
-                                                {/* Category */}
                                                 <div className="mb-4">
                                                     <span className="inline-block bg-[#64FFDA]/20 text-[#64FFDA] text-xs px-2 py-1 rounded-full font-medium border border-[#64FFDA]/30">
                                                         {umkm.category}
                                                     </span>
                                                 </div>
 
-                                                {/* Description */}
                                                 <div className="mb-4 flex-shrink-0">
                                                     <p className="text-white/70 text-sm leading-relaxed h-12 overflow-hidden">
                                                         <span className="line-clamp-3">{umkm.description}</span>
                                                     </p>
                                                 </div>
 
-                                                {/* Address */}
                                                 <div className="flex items-start space-x-2 mb-4 flex-shrink-0">
                                                     <MapPin className="w-4 h-4 text-white/60 mt-0.5 flex-shrink-0" />
                                                     <span className="text-sm text-white/70 line-clamp-2 leading-relaxed">{umkm.address}</span>
                                                 </div>
 
-                                                {/* Products */}
                                                 <div className="mb-4 flex-shrink-0">
                                                     <h4 className="text-sm font-medium text-white mb-2">Produk:</h4>
                                                     <div className="flex flex-wrap gap-1 min-h-[2rem]">
@@ -448,7 +588,6 @@ export default function UmkmListPage({
                                                     </div>
                                                 </div>
 
-                                                {/* Contact and Social Media */}
                                                 <div className="flex items-center justify-between mt-auto pt-2">
                                                     <div className="flex items-center space-x-2 flex-1 min-w-0">
                                                         <Phone className="w-4 h-4 text-white/60 flex-shrink-0" />
@@ -478,7 +617,6 @@ export default function UmkmListPage({
                                                     </div>
                                                 </div>
 
-                                                {/* Created Date */}
                                                 <div className="mt-3 pt-3 border-t border-white/20">
                                                     <p className="text-xs text-white/60">
                                                         Bergabung: {new Date(umkm.created_at).toLocaleDateString('id-ID')}
@@ -486,7 +624,6 @@ export default function UmkmListPage({
                                                 </div>
                                             </div>
 
-                                            {/* Card Footer */}
                                             <div className="bg-white/5 backdrop-blur-sm px-6 py-4 mt-auto flex-shrink-0 border-t border-white/20">
                                                 <Link
                                                     href={`/umkm/${umkm.id}`}
@@ -501,14 +638,23 @@ export default function UmkmListPage({
                                 })}
                             </div>
 
-                            {/* Pagination - Ocean Theme */}
+                            {/* PERBAIKAN: Pagination dengan button responsif */}
                             {safeUmkms.links && safeUmkms.links.length > 3 && (
-                                <div className="bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-6 ">
-                                    <div className="flex items-center justify-between">
-                                        <div className="text-sm text-white/80">
+                                <div 
+                                    ref={paginationRef}
+                                    className={`bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-4 md:p-6 border border-white/20 transition-opacity duration-300 ${
+                                        isLoading ? 'opacity-60 pointer-events-none' : 'opacity-100'
+                                    }`}
+                                >
+                                    <div className="flex items-center justify-between gap-4">
+                                        {/* Page Info - Hidden untuk mobile, tampilkan untuk desktop */}
+                                        <div className={`${isTabletOrMobile ? 'hidden' : 'block'} text-sm text-white/80`}>
                                             Halaman {safeUmkms.meta?.current_page || 1} dari {safeUmkms.meta?.last_page || 1}
                                         </div>
-                                        <div className="flex items-center space-x-2">
+
+                                        {/* Navigation - Full width untuk mobile */}
+                                        <div className={`flex items-center justify-center ${isTabletOrMobile ? 'w-full' : ''} gap-2`}>
+                                            {/* Previous Button - RESPONSIF */}
                                             {safeUmkms.links.map((link, index) => {
                                                 if (link.label.includes('Previous')) {
                                                     return (
@@ -516,57 +662,125 @@ export default function UmkmListPage({
                                                             key={index}
                                                             onClick={() => link.url && handlePageChange(link.url)}
                                                             disabled={!link.url}
-                                                            className={`px-3 py-2 text-sm rounded-lg flex items-center space-x-1 transition-all duration-300 ${
+                                                            className={`${
+                                                                isTablet 
+                                                                    ? 'min-w-[36px] h-10 justify-center' 
+                                                                    : isTabletOrMobile 
+                                                                        ? 'px-3 py-2 text-sm font-medium' 
+                                                                        : 'px-3 py-2 text-sm'
+                                                            } rounded-lg flex items-center gap-2 transition-all duration-300 backdrop-blur-md border ${
                                                                 link.url
-                                                                    ? 'bg-white/10 hover:bg-white/15 text-white border border-white/20 hover:border-[#64FFDA]/40'
-                                                                    : 'bg-white/5 text-white/40 cursor-not-allowed border border-white/10'
+                                                                    ? 'bg-white/10 hover:bg-white/15 text-white border-white/20 hover:border-[#64FFDA]/40'
+                                                                    : 'bg-white/5 text-white/40 cursor-not-allowed border-white/10'
                                                             }`}
                                                         >
                                                             <ChevronLeft size={16} />
-                                                            <span>Sebelumnya</span>
+                                                            {/* PERBAIKAN: Tampilkan text hanya jika bukan tablet */}
+                                                            {!isTablet && <span>Sebelumnya</span>}
                                                         </button>
                                                     );
                                                 }
-                                                
+                                                return null;
+                                            })}
+
+                                            {/* Page Numbers */}
+                                            <div className="flex items-center gap-1">
+                                                {(() => {
+                                                    const currentPage = safeUmkms.meta?.current_page || 1;
+                                                    const lastPage = safeUmkms.meta?.last_page || 1;
+                                                    const pageLinks = safeUmkms.links.slice(1, -1); // Remove prev/next
+
+                                                    if (isTabletOrMobile) {
+                                                        // MOBILE/TABLET: Tampilkan max 5 pages yang smart
+                                                        const pages = [];
+                                                        const maxVisible = isTablet ? 3 : 5; // Tablet hanya 3, mobile 5
+                                                        
+                                                        let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+                                                        let end = Math.min(lastPage, start + maxVisible - 1);
+                                                        
+                                                        if (end - start < maxVisible - 1) {
+                                                            start = Math.max(1, end - maxVisible + 1);
+                                                        }
+
+                                                        for (let i = start; i <= end; i++) {
+                                                            const pageLink = pageLinks.find(link => link.label === i.toString());
+                                                            pages.push(
+                                                                <button
+                                                                    key={i}
+                                                                    onClick={() => pageLink?.url && handlePageChange(pageLink.url)}
+                                                                    disabled={!pageLink?.url}
+                                                                    className={`${
+                                                                        isTablet ? 'min-w-[32px] h-8 text-xs' : 'min-w-[40px] h-10 text-sm'
+                                                                    } rounded-lg font-medium backdrop-blur-md transition-all duration-300 flex items-center justify-center border ${
+                                                                        i === currentPage 
+                                                                            ? 'bg-[#64FFDA] text-[rgb(12,52,76)] border-[#64FFDA] font-bold shadow-lg' 
+                                                                            : 'bg-white/10 hover:bg-white/15 text-white border-white/20 hover:border-[#64FFDA]/40'
+                                                                    }`}
+                                                                >
+                                                                    {i}
+                                                                </button>
+                                                            );
+                                                        }
+
+                                                        return pages;
+                                                    } else {
+                                                        // DESKTOP: Logic pagination normal
+                                                        return pageLinks.map((link, pageIndex) => {
+                                                            if (link.label === '...') {
+                                                                return (
+                                                                    <span key={pageIndex} className="px-2 text-white/60">
+                                                                        ...
+                                                                    </span>
+                                                                );
+                                                            }
+
+                                                            const isActive = link.active;
+                                                            return (
+                                                                <button
+                                                                    key={pageIndex}
+                                                                    onClick={() => link.url && handlePageChange(link.url)}
+                                                                    disabled={!link.url}
+                                                                    className={`px-3 py-2 text-sm rounded-lg backdrop-blur-md transition-all duration-300 border ${
+                                                                        isActive
+                                                                            ? 'bg-[#64FFDA] text-[rgb(12,52,76)] border-[#64FFDA] font-bold shadow-lg'
+                                                                            : 'bg-white/10 hover:bg-white/15 text-white border-white/20 hover:border-[#64FFDA]/40'
+                                                                    }`}
+                                                                >
+                                                                    {link.label}
+                                                                </button>
+                                                            );
+                                                        });
+                                                    }
+                                                })()}
+                                            </div>
+
+                                            {/* Next Button - RESPONSIF */}
+                                            {safeUmkms.links.map((link, index) => {
                                                 if (link.label.includes('Next')) {
                                                     return (
                                                         <button
                                                             key={index}
                                                             onClick={() => link.url && handlePageChange(link.url)}
                                                             disabled={!link.url}
-                                                            className={`px-3 py-2 text-sm rounded-lg flex items-center space-x-1 transition-all duration-300 ${
+                                                            className={`${
+                                                                isTablet 
+                                                                    ? 'min-w-[36px] h-10 justify-center' 
+                                                                    : isTabletOrMobile 
+                                                                        ? 'px-3 py-2 text-sm font-medium' 
+                                                                        : 'px-3 py-2 text-sm'
+                                                            } rounded-lg flex items-center gap-2 transition-all duration-300 backdrop-blur-md border ${
                                                                 link.url
-                                                                    ? 'bg-white/10 hover:bg-white/15 text-white border border-white/20 hover:border-[#64FFDA]/40'
-                                                                    : 'bg-white/5 text-white/40 cursor-not-allowed border border-white/10'
+                                                                    ? 'bg-white/10 hover:bg-white/15 text-white border-white/20 hover:border-[#64FFDA]/40'
+                                                                    : 'bg-white/5 text-white/40 cursor-not-allowed border-white/10'
                                                             }`}
                                                         >
-                                                            <span>Selanjutnya</span>
+                                                            {/* PERBAIKAN: Tampilkan text hanya jika bukan tablet */}
+                                                            {!isTablet && <span>Selanjutnya</span>}
                                                             <ChevronRight size={16} />
                                                         </button>
                                                     );
                                                 }
-                                                
-                                                if (link.label === '...') {
-                                                    return (
-                                                        <span key={index} className="px-3 py-2 text-white/60">
-                                                            ...
-                                                        </span>
-                                                    );
-                                                }
-                                                
-                                                return (
-                                                    <button
-                                                        key={index}
-                                                        onClick={() => link.url && handlePageChange(link.url)}
-                                                        className={`px-3 py-2 text-sm rounded-lg transition-all duration-300 ${
-                                                            link.active
-                                                                ? 'bg-[#64FFDA] text-[rgb(12,52,76)] font-semibold'
-                                                                : 'bg-white/10 hover:bg-white/15 text-white border border-white/20 hover:border-[#64FFDA]/40'
-                                                        }`}
-                                                    >
-                                                        {link.label}
-                                                    </button>
-                                                );
+                                                return null;
                                             })}
                                         </div>
                                     </div>
@@ -574,7 +788,7 @@ export default function UmkmListPage({
                             )}
                         </>
                     ) : (
-                        // Empty State - Ocean Theme
+                        // Empty State
                         <div className="text-center py-12 mb-12">
                             <div className="w-24 h-24 bg-white/10 border border-white/20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
                                 <Filter className="w-12 h-12 text-white/60" />
@@ -592,7 +806,6 @@ export default function UmkmListPage({
                                 }
                             </p>
                             
-                            {/* Reset Filter Button - Always visible for now */}
                             <button
                                 onClick={() => handleCategoryFilter('Semua')}
                                 className="group relative inline-flex items-center space-x-2 transform overflow-hidden rounded-lg border border-white/30 bg-white/5 px-6 py-3 text-white shadow-lg backdrop-blur-md transition-all duration-500 ease-in-out before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-br before:from-transparent before:via-transparent before:to-transparent before:opacity-0 before:transition-all before:duration-500 hover:scale-[1.03] hover:border-[#64FFDA] hover:shadow-[#64FFDA]/30 hover:before:from-[#64FFDA]/10 hover:before:to-transparent hover:before:opacity-100"
@@ -603,7 +816,6 @@ export default function UmkmListPage({
                     )}
                 </div>
                 
-                {/* Footer */}
                 <UmkmFooter />
             </div>
         </>

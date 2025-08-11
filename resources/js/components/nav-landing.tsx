@@ -48,23 +48,18 @@ export default function NavLanding() {
                         </a>
                     </li>
                     <li>
-                        <a href="/umkm" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            UMKM Olah Laut Kemujan
-                        </a>
-                    </li>
-                    <li>
                         <a href="/seaweed-type" className="block hover:text-blue-400" onClick={toggleMenu}>
                             Jenis-Jenis Rumput Laut
                         </a>
                     </li>
                     <li>
-                        <a href="/user/processing-methods" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Cara Pengolahan
+                        <a href="/budidaya-rula" className="block hover:text-blue-400" onClick={toggleMenu}>
+                            Peta Lokasi Budidaya Rumput Laut dan Booklet
                         </a>
                     </li>
                     <li>
-                        <a href="/budidaya-rula" className="block hover:text-blue-400" onClick={toggleMenu}>
-                            Peta Lokasi Budidaya Rumput Laut dan Booklet
+                        <a href="/umkm" className="block hover:text-blue-400" onClick={toggleMenu}>
+                            UMKM & Modul Pelatihan
                         </a>
                     </li>
                 </ul>

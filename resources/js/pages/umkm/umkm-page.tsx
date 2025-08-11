@@ -5,6 +5,7 @@ import UmkmAbout from '@/components/umkm/umkm-about';
 import UmkmPrograms from '@/components/umkm/umkm-programs';
 import UmkmContact from '@/components/umkm/umkm-contact';
 import UmkmFooter from '@/components/umkm/umkm-footer';
+import ScrollToTopButton from '@/components/ui/ScrollToTopButton';
 
 // Interface untuk stats yang diterima dari Controller
 interface Stats {
@@ -51,8 +52,8 @@ interface CategoryStat {
 interface UmkmPageProps {
     stats?: Stats;
     featured_products?: FeaturedProduct[];
-    featured_umkms?: Umkm[]; // Data UMKM unggulan dari admin panel
-    categories?: CategoryStat[]; // Data kategori dengan jumlah
+    featured_umkms?: Umkm[];
+    categories?: CategoryStat[];
 }
 
 export default function UmkmPage({ stats, featured_umkms, categories }: UmkmPageProps) {
@@ -106,6 +107,12 @@ export default function UmkmPage({ stats, featured_umkms, categories }: UmkmPage
                 
                 {/* Footer */}
                 <UmkmFooter />
+
+                {/* Scroll to Top Button - Muncul ketika user mencapai section about */}
+                <ScrollToTopButton 
+                    targetSectionId="hero"
+                    showOnSection={true}
+                />
             </div>
         </>
     );
