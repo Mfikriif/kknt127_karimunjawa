@@ -90,7 +90,7 @@ export default function ScrollToTopButton({
         if ('vibrate' in navigator && navigator.vibrate) {
             try {
                 navigator.vibrate(50);
-            } catch (_) {
+            } catch {
                 // Ignore vibration errors
             }
         }
