@@ -28,11 +28,11 @@ export default function EditProduct({ product }: Props) {
   });
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [fileName, setFileName] = useState<string>(''); 
+  const [fileName, setFileName] = useState<string>('');
 
   useEffect(() => {
     if (product.image) {
-      setPreviewImage(`/storage/${product.image}`); 
+      setPreviewImage(`/storage/${product.image}`);
     }
   }, [product.image]);
 
@@ -107,11 +107,11 @@ export default function EditProduct({ product }: Props) {
                       onChange={e => setData('category', e.target.value)}
                       className="w-full border-gray-300 rounded-md shadow-sm px-4 py-2 focus:ring-blue-500 focus:border-blue-500"
                     >
-                        <option value="">-- Pilih Kategori --</option>
-                        <option value="rumput_laut">Rumput Laut</option>
-                        <option value="ikan">Ikan</option>
-                        <option value="Mete">Mete</option>
-                        <option value="lainnya">Lainnya</option>
+                      <option value="">-- Pilih Kategori --</option>
+                      <option value="rumput_laut">Rumput Laut</option>
+                      <option value="ikan">Ikan</option>
+                      <option value="Mete">Mete</option>
+                      <option value="lainnya">Lainnya</option>
                     </select>
                     {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
                   </div>

@@ -44,7 +44,7 @@ class ProductController extends Controller
             'admin_id' => Auth::id(),
         ]);
 
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil ditambahkan!');
+        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
     public function edit(Product $product)
@@ -78,7 +78,7 @@ class ProductController extends Controller
             'admin_id' => Auth::id(),
         ]);
 
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diperbarui!');
+        return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui!');
     }
     public function destroy(Product $product)
     {
@@ -93,7 +93,7 @@ class ProductController extends Controller
             'admin_id' => Auth::id(),
         ]);
 
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil dihapus!');
+        return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus!');
     }
 
 

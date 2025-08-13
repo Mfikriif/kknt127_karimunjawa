@@ -23,7 +23,7 @@ export default function SeaweedTypesPage() {
         <>
             <NavLanding />
             <Head title="Jenis Rumput Laut" />
-            <section className="relative min-h-[100dvh] overflow-hidden bg-gradient-to-br from-[#0A2342] to-[#0E3A5A] px-4 py-16 text-white sm:px-8 md:px-16 lg:px-24">
+            <section className="relative min-h-[100dvh] bg-gradient-to-b from-[#0C344C] to-[#0f415e] px-4 py-16 text-white sm:px-8 md:px-16 lg:px-24">
                 <div className="my-28">
                     <div className="relative z-10 mb-16 text-center">
                         <h1 className="text-4xl leading-tight font-extrabold tracking-tight md:text-5xl">
@@ -52,6 +52,15 @@ function SeaweedCard({ seaweed }: { seaweed: SeaweedType }) {
 
     return (
         <div className="group relative flex transform flex-col overflow-hidden rounded-xl border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-md transition-all duration-500 ease-in-out before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-br before:from-transparent before:via-transparent before:to-transparent before:opacity-0 before:transition-all before:duration-500 hover:scale-[1.03] hover:border-[#64FFDA] hover:shadow-cyan-500/30 hover:before:from-[#64FFDA]/10 hover:before:to-transparent hover:before:opacity-100">
+            {/* Overlay untuk efek gradien saat hover */}
+            <div
+                className="pointer-events-none absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style={{
+                    background: 'linear-gradient(45deg, rgba(100, 255, 218, 0.1), rgba(100, 255, 218, 0.02) 50%, transparent 100%)',
+                    zIndex: 0,
+                }}
+            ></div>
+
             {seaweed.image ? (
                 <div className="relative mb-4 flex w-full items-center justify-center overflow-hidden rounded-lg bg-gray-800 pb-[75%] shadow-lg">
                     {!imageLoaded && (
@@ -75,16 +84,16 @@ function SeaweedCard({ seaweed }: { seaweed: SeaweedType }) {
 
             <h2 className="mb-2 text-2xl leading-snug font-bold text-white drop-shadow-sm">{seaweed.name}</h2>
 
-            {/* --- BAGIAN YANG DIUBAH --- */}
+            {/* Karakteristik sebagai badge chips */}
             {seaweed.characteristics && (
                 <div className="mb-3 flex flex-wrap gap-2">
                     {seaweed.characteristics
-                        .split('-') // 1. Pecah string berdasarkan tanda '-'
-                        .map((char) => char.trim()) // 2. Hapus spasi di awal/akhir setiap item
-                        .filter((char) => char) // 3. Hapus item yang kosong jika ada
+                        .split('-') // Pecah string berdasarkan tanda '-'
+                        .map((char) => char.trim()) // Hapus spasi di awal/akhir setiap item
+                        .filter((char) => char) // Hapus item yang kosong jika ada
                         .map((char, index) => (
                             <span
-                                key={index} // 4. Beri key unik untuk setiap badge
+                                key={index} // Beri key unik untuk setiap badge
                                 className="inline-block rounded-full bg-emerald-900 px-3 py-1 text-xs font-semibold tracking-wider text-emerald-300 uppercase"
                             >
                                 {char}
@@ -92,7 +101,6 @@ function SeaweedCard({ seaweed }: { seaweed: SeaweedType }) {
                         ))}
                 </div>
             )}
-            {/* --- AKHIR BAGIAN YANG DIUBAH --- */}
 
             {seaweed.benefits && (
                 <div className="flex-grow">
