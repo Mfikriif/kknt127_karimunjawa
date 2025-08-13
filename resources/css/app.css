@@ -157,3 +157,654 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* ===== ANIMATIONS ===== */
+@keyframes wave {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-10px); }
+}
+
+@keyframes verifiedPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
+    }
+}
+
+.wave-animation {
+    animation: wave 3s ease-in-out infinite;
+}
+
+/* ===== RESPONSIVE GRID SYSTEMS ===== */
+@media (min-width: 640px) {
+    .grid-responsive {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid-responsive {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ===== MOBILE RESPONSIVE STYLES ===== */
+@media (max-width: 768px) {
+    .umkm-detail-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .image-gallery-nav {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .image-gallery-nav.prev {
+        left: 12px;
+    }
+    
+    .image-gallery-nav.next {
+        right: 12px;
+    }
+    
+    .umkm-detail-header {
+        text-align: center;
+    }
+    
+    .contact-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .price-range {
+        font-size: 1.25rem;
+    }
+
+    .facilities-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mobile-padding {
+        @apply px-4;
+    }
+    
+    .mobile-text-sm {
+        @apply text-sm;
+    }
+    
+    .mobile-hidden {
+        @apply hidden;
+    }
+
+    .mobile-grid-1 {
+        grid-template-columns: 1fr;
+    }
+
+    .mobile-h-32 {
+        height: 8rem;
+    }
+}
+
+/* Tablet responsive adjustments */
+@media (min-width: 641px) and (max-width: 1023px) {
+    .tablet-grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tablet-h-40 {
+        height: 10rem;
+    }
+}
+
+/* Desktop responsive adjustments */
+@media (min-width: 1024px) {
+    .desktop-grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .desktop-h-48 {
+        height: 12rem;
+    }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+    .dark\:bg-dark {
+        @apply bg-gray-900;
+    }
+    
+    .dark\:text-dark {
+        @apply text-gray-100;
+    }
+
+    .dark .info-card {
+        background: rgba(31, 41, 55, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* ===== MOBILE PAGINATION STYLES ===== */
+@media (max-width: 1024px) {
+    /* Pagination container mobile responsive */
+    .mobile-pagination {
+        padding: 1rem;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+    
+    /* Navigation buttons untuk mobile */
+    .mobile-nav-btn {
+        min-width: 100px;
+        height: 40px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Page number buttons untuk mobile */
+    .mobile-page-btn {
+        min-width: 40px;
+        height: 40px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(12px);
+    }
+    
+    /* Active page number styling */
+    .mobile-page-btn.active {
+        background: #64FFDA;
+        color: rgb(12, 52, 76);
+        border: 1px solid #64FFDA;
+        font-weight: bold;
+        box-shadow: 0 4px 12px rgba(100, 255, 218, 0.3);
+        transform: scale(1.05);
+    }
+    
+    /* Inactive page number styling */
+    .mobile-page-btn.inactive {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .mobile-page-btn.inactive:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(100, 255, 218, 0.4);
+        transform: scale(1.02);
+    }
+    
+    /* Page info text */
+    .mobile-page-info {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.7);
+        white-space: nowrap;
+        min-width: 30px;
+        text-align: center;
+    }
+    
+    /* Disabled button states */
+    .mobile-nav-btn:disabled {
+        background: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.4);
+        cursor: not-allowed;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Gap between pagination elements */
+    .pagination-gap {
+        gap: 0.5rem;
+    }
+    
+    /* Center pagination on mobile */
+    .pagination-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+/* Very small mobile adjustments */
+@media (max-width: 380px) {
+    .mobile-nav-btn {
+        min-width: 80px;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+    
+    .mobile-page-btn {
+        min-width: 36px;
+        height: 36px;
+        font-size: 0.75rem;
+    }
+    
+    .mobile-page-info {
+        font-size: 0.625rem;
+        min-width: 25px;
+    }
+    
+    .pagination-gap {
+        gap: 0.25rem;
+    }
+}
+
+/* Enhanced button hover effects */
+@media (min-width: 1025px) {
+    .desktop-pagination-btn {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .desktop-pagination-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .desktop-pagination-btn.active {
+        box-shadow: 0 0 20px rgba(100, 255, 218, 0.4);
+    }
+}
+
+/* Loading state styles */
+.pagination-loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+}
+
+.pagination-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #64FFDA;
+    border-radius: 50%;
+    animation: pagination-spin 1s linear infinite;
+}
+
+@keyframes pagination-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Smooth transitions */
+.pagination-transition {
+    transition: all 0.3s ease;
+}
+
+/* Focus states for accessibility */
+.mobile-nav-btn:focus,
+.mobile-page-btn:focus {
+    outline: 2px solid #64FFDA;
+    outline-offset: 2px;
+}
+
+/* Grid adjustment untuk maksimal 6 items per page pada mobile */
+@media (max-width: 1024px) {
+    .umkm-grid-mobile {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    @media (min-width: 640px) {
+        .umkm-grid-mobile {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+    }
+    
+    @media (min-width: 768px) {
+        .umkm-grid-mobile {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+    }
+}
+
+/* Desktop grid tetap 3 kolom */
+@media (min-width: 1025px) {
+    .umkm-grid-desktop {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+}
+
+/* Responsive text scaling */
+@media (max-width: 1024px) {
+    .responsive-title {
+        font-size: 1.875rem;
+    }
+    
+    .responsive-subtitle {
+        font-size: 1rem;
+    }
+    
+    .responsive-card-title {
+        font-size: 1rem;
+    }
+    
+    .responsive-card-text {
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .responsive-title {
+        font-size: 1.5rem;
+    }
+    
+    .responsive-subtitle {
+        font-size: 0.875rem;
+    }
+    
+    .responsive-card-title {
+        font-size: 0.875rem;
+    }
+    
+    .responsive-card-text {
+        font-size: 0.75rem;
+    }
+}
+
+/* Category filter scroll enhancement */
+@media (max-width: 1024px) {
+    .category-scroll {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        scroll-behavior: smooth;
+        padding-bottom: 0.5rem;
+    }
+    
+    .category-scroll::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .category-button-mobile {
+        min-width: max-content;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+}
+
+/* Search bar responsive */
+@media (max-width: 1024px) {
+    .search-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .search-input-mobile {
+        width: 100%;
+        padding: 0.75rem 2.5rem 0.75rem 2.5rem;
+        font-size: 0.875rem;
+    }
+    
+    .search-button-mobile {
+        width: 100%;
+        justify-content: center;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* Stats cards responsive */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .stats-card {
+        padding: 1.5rem;
+    }
+    
+    .stats-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    
+    .stats-number {
+        font-size: 1.5rem;
+    }
+    
+    .stats-label {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .stats-grid {
+        gap: 1rem;
+    }
+    
+    .stats-card {
+        padding: 1rem;
+    }
+    
+    .stats-icon {
+        width: 2rem;
+        height: 2rem;
+    }
+    
+    .stats-number {
+        font-size: 1.25rem;
+    }
+}
+
+/* Card image responsive */
+@media (max-width: 1024px) {
+    .card-image {
+        height: 10rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .card-image {
+        height: 8rem;
+    }
+}
+
+/* Enhanced glassmorphism effect untuk mobile */
+@media (max-width: 1024px) {
+    .glass-effect {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .glass-effect-strong {
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+}
+
+/* Animation untuk page transitions */
+.page-enter {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.page-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.page-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.page-exit-active {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 300ms ease, transform 300ms ease;
+}
+
+/* Utility classes */
+.text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.backdrop-blur-strong {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* ===== SCROLL TO TOP BUTTON STYLES ===== */
+
+/* Smooth scroll behavior untuk seluruh halaman */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Animasi khusus untuk scroll to top button */
+@keyframes scrollButtonFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes scrollButtonFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+}
+
+/* Class untuk animasi masuk */
+.scroll-button-enter {
+  animation: scrollButtonFadeIn 0.3s ease-out forwards;
+}
+
+/* Class untuk animasi keluar */
+.scroll-button-exit {
+  animation: scrollButtonFadeOut 0.3s ease-in forwards;
+}
+
+/* Hover effect enhancement untuk scroll button */
+.scroll-to-top-button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-to-top-button:hover {
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 
+    0 10px 25px rgba(27, 156, 133, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.scroll-to-top-button:active {
+  transform: translateY(0) scale(1.05);
+  transition: all 0.1s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .scroll-to-top-button {
+    bottom: 1rem;
+    right: 1rem;
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .scroll-to-top-button {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  .scroll-to-top-button {
+    transition: none;
+  }
+  
+  .scroll-to-top-button:hover {
+    transform: none;
+  }
+}
+
+/* Focus states untuk keyboard navigation */
+.scroll-to-top-button:focus {
+  outline: 2px solid #4DD0E1;
+  outline-offset: 2px;
+}
+
+/* Loading state animation */
+@keyframes scrollPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.scroll-button-loading {
+  animation: scrollPulse 1s ease-in-out infinite;
+}
+
+/* Glow effect yang lebih halus */
+@keyframes gentleGlow {
+  0%, 100% {
+    box-shadow: 
+      0 4px 12px rgba(27, 156, 133, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 8px 25px rgba(27, 156, 133, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.2),
+      0 0 20px rgba(77, 208, 225, 0.3);
+  }
+}
+
+.scroll-to-top-button:hover {
+  animation: gentleGlow 2s ease-in-out infinite;
+}

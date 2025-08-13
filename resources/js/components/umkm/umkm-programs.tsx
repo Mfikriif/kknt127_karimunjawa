@@ -224,7 +224,7 @@ export default function UmkmPrograms({ featured_umkms, categories, stats }: Prop
                             <div className="px-4 py-3">
                                 {/* Scroll container */}
                                 <div className="overflow-x-auto scrollbar-hide">
-                                    <div className="flex justify-center gap-4 min-w-max mx-auto w-fit mt-4 mb-8 mx-2">
+                                    <div className="flex justify-center gap-4 min-w-max mx-auto w-fit mt-4 mb-12 px-2">
                                         {allCategories.map((category) => (
                                             <button
                                                 key={category.name}

@@ -222,6 +222,196 @@ class Umkm extends Model
         return $indonesianDay ? ($this->opening_hours[$indonesianDay] ?? null) : null;
     }
 
+    // ==========================================
+    // ADDITIONAL METHODS UNTUK PAGINATION SUPPORT
+    // ==========================================
+
+    /**
+     * Get featured UMKMs dengan diversitas kategori
+     */
+    public static function getFeatured($limit = 6)
+    {
+        // Ambil semua kategori yang ada
+        $categories = self::getCategories();
+        $featuredUmkms = collect();
+
+        // Prioritas 1: Ambil 1 UMKM terbaik dari setiap kategori
+        foreach ($categories as $category) {
+            if ($featuredUmkms->count() >= ($limit - 1)) break;
+            
+            $umkmFromCategory = self::active()
+                ->where('category', $category)
+                ->orderBy('rating', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            if ($umkmFromCategory) {
+                $featuredUmkms->push($umkmFromCategory);
+            }
+        }
+
+        // Prioritas 2: Jika belum mencapai limit, tambahkan UMKM terbaik yang belum masuk
+        if ($featuredUmkms->count() < $limit) {
+            $excludeIds = $featuredUmkms->pluck('id')->toArray();
+            
+            $additionalUmkms = self::active()
+                ->whereNotIn('id', $excludeIds)
+                ->orderBy('rating', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->take($limit - $featuredUmkms->count())
+                ->get();
+
+            $featuredUmkms = $featuredUmkms->concat($additionalUmkms);
+        }
+
+        return $featuredUmkms->take($limit);
+    }
+
+    /**
+     * Get top rated UMKMs
+     */
+    public static function getTopRated($limit = 10)
+    {
+        return self::active()
+            ->orderBy('rating', 'desc')
+            ->take($limit)
+            ->get();
+    }
+
+    /**
+     * Get recently added UMKMs
+     */
+    public static function getRecent($limit = 10)
+    {
+        return self::active()
+            ->orderBy('created_at', 'desc')
+            ->take($limit)
+            ->get();
+    }
+
+    /**
+     * Get UMKM count by status
+     */
+    public static function getStatusStats()
+    {
+        return [
+            'total' => self::count(),
+            'active' => self::where('is_active', true)->count(),
+            'inactive' => self::where('is_active', false)->count(),
+        ];
+    }
+
+    // ==========================================
+    // EXISTING BOOT METHOD (TETAP DIPERTAHANKAN)
+    // ==========================================
+
+    // Boot method untuk auto-delete files
+    // ==========================================
+    // ADDITIONAL ACCESSORS FOR COMPATIBILITY
+    // ==========================================
+
+    /**
+     * Get the full image URL for display photo
+     */
+    public function getDisplayImageUrlAttribute()
+    {
+        if ($this->display_photos && count($this->display_photos) > 0) {
+            return Storage::url('umkm/display/' . $this->display_photos[0]);
+        }
+        
+        if ($this->menu_photo) {
+            return Storage::url('umkm/menu/' . $this->menu_photo);
+        }
+        
+        return null;
+    }
+
+    /**
+     * Get opening hours for today (formatted string)
+     */
+    public function getTodayOpeningHoursAttribute()
+    {
+        $todayHours = $this->getTodayOpeningHours();
+        
+        if (!$todayHours) {
+            return '08:00-17:00';
+        }
+        
+        if ($todayHours['is_open']) {
+            return $todayHours['open_time'] . '-' . $todayHours['close_time'];
+        }
+        
+        return 'Tutup';
+    }
+
+    /**
+     * Check if UMKM is open now (accessor)
+     */
+    public function getIsOpenNowAttribute()
+    {
+        return $this->isOpenNow();
+    }
+
+    /**
+     * Get products count
+     */
+    public function getProductsCountAttribute()
+    {
+        if (is_array($this->products)) {
+            return count($this->products);
+        }
+        
+        return 0;
+    }
+
+    /**
+     * Get rating stars (for display)
+     */
+    public function getRatingStarsAttribute()
+    {
+        return str_repeat('★', floor($this->rating)) . str_repeat('☆', 5 - floor($this->rating));
+    }
+
+    // ==========================================
+    // HELPER METHODS
+    // ==========================================
+
+    /**
+     * Check if UMKM has valid contact info
+     */
+    public function hasValidContact()
+    {
+        return !empty($this->contact) || !empty($this->instagram) || !empty($this->facebook);
+    }
+
+    /**
+     * Get social media links
+     */
+    public function getSocialMediaLinks()
+    {
+        $links = [];
+        
+        if ($this->instagram) {
+            $links['instagram'] = $this->instagram;
+        }
+        
+        if ($this->facebook) {
+            $links['facebook'] = $this->facebook;
+        }
+        
+        return $links;
+    }
+
+    /**
+     * Get summary for display
+     */
+    public function getSummary($length = 100)
+    {
+        return strlen($this->description) > $length ? 
+            substr($this->description, 0, $length) . '...' : 
+            $this->description;
+    }
+
     // Boot method untuk auto-delete files
     protected static function boot()
     {

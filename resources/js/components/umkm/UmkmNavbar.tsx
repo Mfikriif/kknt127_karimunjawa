@@ -34,20 +34,20 @@ export default function UmkmNavbar({ activeMenu, className = "" }: Props) {
     return (
         <>
             {/* Navigation Bar dengan Ocean Theme */}
-            <nav className={`fixed top-0 left-0 right-0 z-50 bg-[rgb(12,52,76)] backdrop-blur-sm z-51 ${className}`}>
+            <nav className={`fixed top-0 left-0 right-0 z-52 bg-[rgb(12,52,76)] backdrop-blur-sm ${className}`}>
                 <div className="container mx-auto px-4 py-3">
                     <div className="flex items-center justify-between">
                         {/* Logo Section */}
                         <div className="flex items-center space-x-3 flex-shrink-0">
                             <img 
-                                src="/image/K-3-removebg.png" 
+                                src="/image/K-3-removebg-persegipanjang.png" 
                                 alt="UMKM Kemujan Logo" 
-                                className="w-10 h-10 object-contain"
+                                className="w-40 h-15 object-contain"
                             />
                         </div>
                         
-                        {/* Desktop Menu */}
-                        <div className="hidden md:flex items-center space-x-8 ml-auto mr-8">
+                        {/* Desktop Menu - Diperbaiki untuk tablet */}
+                        <div className="hidden lg:flex items-center space-x-8 ml-auto mr-8">
                             <button 
                                 onClick={() => handleSectionNavigation('hero')}
                                 className={`text-white/90 hover:text-[#64FFDA] transition-colors text-base font-medium ${activeMenu === 'beranda' ? 'text-[#64FFDA]' : ''}`}
@@ -74,16 +74,47 @@ export default function UmkmNavbar({ activeMenu, className = "" }: Props) {
                             </Link>
                         </div>
 
-                        {/* CTA Button */}
+                        {/* Tablet Menu - Khusus untuk ukuran tablet (768px - 1023px) */}
+                        <div className="hidden md:flex lg:hidden items-center space-x-4 flex-1 justify-center max-w-3xl mx-6">
+                            <button 
+                                onClick={() => handleSectionNavigation('hero')}
+                                className={`text-white/90 hover:text-[#64FFDA] transition-colors text-sm font-medium whitespace-nowrap ${activeMenu === 'beranda' ? 'text-[#64FFDA]' : ''}`}
+                            >
+                                Beranda
+                            </button>
+                            <button 
+                                onClick={() => handleSectionNavigation('about')}
+                                className={`text-white/90 hover:text-[#64FFDA] transition-colors text-sm font-medium whitespace-nowrap ${activeMenu === 'tentang' ? 'text-[#64FFDA]' : ''}`}
+                            >
+                                Tentang
+                            </button>
+                            <Link 
+                                href="/umkm/list-umkm" 
+                                className={`text-white/90 hover:text-[#64FFDA] transition-colors text-sm font-medium whitespace-nowrap ${activeMenu === 'umkm-unggulan' ? 'text-[#64FFDA]' : ''}`}
+                            >
+                                UMKM Unggulan
+                            </Link>
+                            <Link 
+                                href="/umkm/program-kerja" 
+                                className={`text-white/90 hover:text-[#64FFDA] transition-colors text-sm font-medium whitespace-nowrap ${activeMenu === 'program-kerja' ? 'text-[#64FFDA]' : ''}`}
+                            >
+                                Program Kerja
+                            </Link>
+                        </div>
+
+                        {/* CTA Button & Mobile Menu Button Container */}
                         <div className="flex items-center space-x-3">
+                            {/* Desktop & Tablet CTA Button - Tampil di layar >= 768px */}
                             <a 
-                                href="http://127.0.0.1:8000/"
-                                className="hidden sm:block bg-[#64FFDA] text-[rgb(12,52,76)] px-4 py-2 rounded-lg hover:bg-[#4DD0E1] transition-all duration-300 font-semibold text-sm hover:scale-105"
+                                href="https://olahlautkemujan.com"
+                                className="hidden md:block bg-[#64FFDA] text-[rgb(12,52,76)] px-3 md:px-4 py-2 rounded-lg hover:bg-[#4DD0E1] transition-all duration-300 font-semibold text-xs md:text-sm hover:scale-105 whitespace-nowrap"
+                                target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 Olah Laut Kemujan
                             </a>
 
-                            {/* Mobile Menu Button */}
+                            {/* Mobile Menu Button - Hanya tampil di layar < 768px */}
                             <button
                                 onClick={toggleMobileMenu}
                                 className="md:hidden text-white/90 hover:text-[#64FFDA] transition-colors p-2 rounded-lg hover:bg-white/10"
@@ -94,7 +125,7 @@ export default function UmkmNavbar({ activeMenu, className = "" }: Props) {
                     </div>
                 </div>
 
-                {/* Mobile Menu Overlay */}
+                {/* Mobile Menu Overlay - Hanya tampil di layar < 768px */}
                 {isMobileMenuOpen && (
                     <div className="md:hidden bg-[rgb(12,52,76)] border-t border-[#64FFDA]/20 shadow-xl">
                         <div className="container mx-auto px-4 py-6 space-y-1">
@@ -131,14 +162,16 @@ export default function UmkmNavbar({ activeMenu, className = "" }: Props) {
                                 Program Kerja
                             </Link>
                             
-                            {/* Mobile CTA Button */}
+                            {/* Mobile CTA Button - Masuk ke dalam hamburger menu */}
                             <div className="pt-4 border-t border-white/10 mt-4">
                                 <a 
-                                    href="http://127.0.0.1:8000/"
+                                    href="https://olahlautkemujan.com"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                     className="block w-full bg-[#64FFDA] text-[rgb(12,52,76)] px-6 py-3 rounded-lg hover:bg-[#4DD0E1] transition-all duration-300 font-bold text-center text-sm"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                 >
-                                    Olah Laut Kemujan
+                                    Kembali ke Olah Laut Kemujan
                                 </a>
                             </div>
                         </div>

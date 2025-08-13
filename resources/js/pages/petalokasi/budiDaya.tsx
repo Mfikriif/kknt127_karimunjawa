@@ -52,8 +52,9 @@ export default function Budidaya() {
                     {/* Deskripsi */}
                     <div className="flex-1 text-base leading-relaxed">
                         <p className="mb-4">
-                            Berikut merupakan booklet yang berisi informasi mengenai budidaya rumput laut, Produk, dan Wisata di Desa Kemujan,
-                            Karimunjawa. Booklet ini dirancang untuk memberikan panduan praktis dan informasi penting bagi para petani rumput laut.
+                            Berikut ini merupakan booklet yang berisi informasi mengenai budidaya rumput laut, produk, dan Wisata di Desa Kemujan.
+                            Booklet ini dirancang untuk memberikan panduan praktis dan informasi penting bagi para wisatawan sebelum pergi ke Desa
+                            Kemujan.
                         </p>
                     </div>
                 </div>
