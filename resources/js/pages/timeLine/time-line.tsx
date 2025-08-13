@@ -67,8 +67,16 @@ export default function TimeLine() {
         },
         {
             title: 'Kegiatan Fase 4',
-            description: 'Deskripsi kegiatan 3 yang dilakukan pada tanggal tertentu.',
-            date: '23 Juni 2025 - 4 Juli 2025',
+            media: [
+                { type: 'image', src: 'imageassets/fase4expo.jpg' },
+                { type: 'image', src: 'imageassets/fase4fotbarpulang.jpg' },
+                { type: 'image', src: 'imageassets/fase4sowankelompokbudidaya.jpg' },
+                { type: 'image', src: 'imageassets/fase4keberangkatan.jpeg' },
+                { type: 'image', src: 'imageassets/prokerbg.jpg' },
+                { type: 'image', src: 'imageassets/fase4mmtlokasipenanaman.jpg' },
+            ],
+            description: 'Kegiatan fase 4 terfokus pada UMKM sebagai finishing dari fase sebelumnya. Kegiatan dimulai dengan diskusi dengan kelompok budidaya di Kemujan, survei dan pendataan UMKM, dan diakhiri dengan Expo Seminar KEMILAU sebagai puncak kegiatan KKN',
+            date: '4 Juli 2025 - 13 Juli 2025',
         },
     ];
 
@@ -82,6 +90,12 @@ export default function TimeLine() {
         {
             nama: 'Linda Ratna Kholifah',
             image: 'imageassets/linda.jpg',
+            fakultas: 'Fakultas Teknik',
+            jurusan: 'S1 Teknik Komputer',
+        },
+        {
+            nama: 'Raditya Wisnu C.N.',
+            image: 'imageassets/radityawisnu.JPG',
             fakultas: 'Fakultas Teknik',
             jurusan: 'S1 Teknik Komputer',
         },
